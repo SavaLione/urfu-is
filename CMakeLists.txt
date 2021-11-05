@@ -23,6 +23,14 @@ project(${ISL_ADDITIVE_PROJECT}
     LANGUAGES CXX
 )
 
+# Мультипликативный шифр
+set(ISL_MULTIPLICATIVE_PROJECT "2_multiplicative")
+set(ISL_MULTIPLICATIVE_PROJECT_VERSION "0.0.1")
+project(${ISL_MULTIPLICATIVE_PROJECT}
+    VERSION ${ISL_MULTIPLICATIVE_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")           # debug
@@ -48,12 +56,37 @@ set(ISL_ADDITIVE_SRC
 add_executable(${ISL_ADDITIVE_PROJECT} ${ISL_ADDITIVE_SRC})
 target_include_directories(${ISL_ADDITIVE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Мультипликативный шифр ###
+# Core
+set(ISL_MULTIPLICATIVE_CORE_SRC
+    src/core/multiplicative_main.cpp
+    src/core/multiplicative.cpp
+    src/core/multiplicative.h
+)
+
+# Sources
+set(ISL_MULTIPLICATIVE_SRC
+    ${ISL_MULTIPLICATIVE_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_MULTIPLICATIVE_PROJECT} ${ISL_MULTIPLICATIVE_SRC})
+target_include_directories(${ISL_MULTIPLICATIVE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
 
 ### Аддитивный шифр ###
 set_target_properties(${ISL_ADDITIVE_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+### Мультипликативный шифр ###
+set_target_properties(${ISL_MULTIPLICATIVE_PROJECT}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
