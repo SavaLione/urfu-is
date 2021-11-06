@@ -31,6 +31,14 @@ project(${ISL_MULTIPLICATIVE_PROJECT}
     LANGUAGES CXX
 )
 
+# Аффинный шифр
+set(ISL_AFFINE_PROJECT "3_affine")
+set(ISL_AFFINE_PROJECT_VERSION "0.0.1")
+project(${ISL_AFFINE_PROJECT}
+    VERSION ${ISL_AFFINE_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")           # debug
@@ -73,6 +81,23 @@ set(ISL_MULTIPLICATIVE_SRC
 add_executable(${ISL_MULTIPLICATIVE_PROJECT} ${ISL_MULTIPLICATIVE_SRC})
 target_include_directories(${ISL_MULTIPLICATIVE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Аффинный шифр ###
+# Core
+set(ISL_AFFINE_CORE_SRC
+    src/core/affine_main.cpp
+    src/core/affine.cpp
+    src/core/affine.h
+)
+
+# Sources
+set(ISL_AFFINE_SRC
+    ${ISL_AFFINE_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_AFFINE_PROJECT} ${ISL_AFFINE_SRC})
+target_include_directories(${ISL_AFFINE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
@@ -87,6 +112,14 @@ set_target_properties(${ISL_ADDITIVE_PROJECT}
 
 ### Мультипликативный шифр ###
 set_target_properties(${ISL_MULTIPLICATIVE_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+### Аффинный шифр ###
+set_target_properties(${ISL_AFFINE_PROJECT}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
