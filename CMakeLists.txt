@@ -6,12 +6,12 @@
 cmake_minimum_required (VERSION 3.13.1)
 
 # Шифры
-#   Аддитивный шифр
-#   Мультипликативный шифр
-#   Аффинный шифр
+#   + Аддитивный шифр
+#   + Мультипликативный шифр
+#   + Аффинный шифр
 #   Автоключевой шифр
 #   Плейфера
-#   Бишера
+#   * Виженера
 #   Хила
 #   Шифр перестановки
 
@@ -39,9 +39,27 @@ project(${ISL_AFFINE_PROJECT}
     LANGUAGES CXX
 )
 
+# Шифр Хилла
+set(ISL_HILL_PROJECT "7_hill")
+set(ISL_HILL_PROJECT_VERSION "0.0.1")
+project(${ISL_HILL_PROJECT}
+    VERSION ${ISL_HILL_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")           # debug
+
+#################################################################################
+#                                    Libraries                                  #
+#################################################################################
+
+# Eigen3
+#set(EIGEN_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/imgui/include" CACHE PATH "imgui lib include")
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/eigen)
+
+#find_package (Eigen3 REQUIRED NO_MODULE)
 
 #################################################################################
 #                                     Sources                                   #
@@ -98,6 +116,24 @@ set(ISL_AFFINE_SRC
 add_executable(${ISL_AFFINE_PROJECT} ${ISL_AFFINE_SRC})
 target_include_directories(${ISL_AFFINE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Шифр Хилла ###
+# Core
+set(ISL_HILL_CORE_SRC
+    src/core/hill_main.cpp
+    src/core/hill.cpp
+    src/core/hill.h
+)
+
+# Sources
+set(ISL_HILL_SRC
+    ${ISL_HILL_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_HILL_PROJECT} ${ISL_HILL_SRC})
+target_include_directories(${ISL_HILL_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+target_link_libraries(${ISL_HILL_PROJECT} Eigen3::Eigen)
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
@@ -126,3 +162,10 @@ set_target_properties(${ISL_AFFINE_PROJECT}
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
+### Хилл шифр ###
+set_target_properties(${ISL_HILL_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
