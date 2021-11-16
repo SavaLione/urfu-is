@@ -11,9 +11,13 @@ public:
     void decryption();
 
 private:
+    std::string _alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .";
+
     int _mod_inverse(int a, int m);
     void _get_cofactor(std::vector<std::vector<int>> &a, std::vector<std::vector<int>> &temp, int p, int q, int n);
     int _determinant(std::vector<std::vector<int>> &a, int n, int N);
     void _adjoint(std::vector<std::vector<int>> &a, std::vector<std::vector<int>> &adj, int N);
     bool _inverse(std::vector<std::vector<int>> &a, std::vector<std::vector<int>> &inv, int N);
+
+    int _get_num(char const& ch);
 };

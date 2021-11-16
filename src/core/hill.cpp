@@ -87,15 +87,18 @@ bool hill::_inverse(std::vector<std::vector<int>> &a, std::vector<std::vector<in
         std::cout << "Inverse does not exist" << std::endl;
         return false;
     }
-    int invDet = _mod_inverse(det, 26);
-    std::cout << det % 26 << ' ' << invDet << '\n';
+    // int invDet = _mod_inverse(det, 26);
+    int invDet = _mod_inverse(det, _alphabet.size());
+    // std::cout << det % 26 << ' ' << invDet << '\n';
+    std::cout << det % _alphabet.size() << ' ' << invDet << '\n';
     std::vector<std::vector<int>> adj(N, std::vector<int>(N));
     _adjoint(a, adj, N);
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
         {
-            inv[i][j] = (adj[i][j] * invDet) % 26;
+            // inv[i][j] = (adj[i][j] * invDet) % 26;
+            inv[i][j] = (adj[i][j] * invDet) % _alphabet.size();
         }
     }
     return true;
@@ -134,10 +137,13 @@ void hill::decryption()
             int temp = k;
             for (j = 0; j < n; j++)
             {
-                sum += ((inv[i][j] + 26) % 26 * (s[temp++] - 'a') % 26) % 26;
-                sum = sum % 26;
+                // sum += ((inv[i][j] + 26) % 26 * (s[temp++] - 'a') % 26) % 26;
+                // sum = sum % 26;
+                sum += ((inv[i][j] + _alphabet.size()) % _alphabet.size() * _get_num(s[temp++]) % _alphabet.size() % _alphabet.size());
+                sum = sum % _alphabet.size();
             }
-            ans += (sum + 'a');
+            // ans += (sum + 'a');
+            ans += _alphabet[sum];
         }
         k += n;
     }
@@ -152,6 +158,20 @@ void hill::decryption()
         std::cout << ans[i];
     }
     std::cout << '\n';
+}
+
+int hill::_get_num(char const &ch)
+{
+    int ret = 0;
+    for (int i = 0; i < _alphabet.size(); i++)
+    {
+        if (_alphabet[i] == ch)
+        {
+            return i;
+        }
+    }
+
+    return ret;
 }
 
 void hill::encryption()
@@ -186,10 +206,13 @@ void hill::encryption()
             int temp = k;
             for (j = 0; j < n; j++)
             {
-                sum += (a[i][j] % 26 * (s[temp++] - 'a') % 26) % 26;
-                sum = sum % 26;
+                // sum += (a[i][j] % 26 * (s[temp++] - 'a') % 26) % 26;
+                // sum = sum % 26;
+                sum += (a[i][j] % _alphabet.size() * _get_num(s[temp++]) % _alphabet.size() % _alphabet.size());
+                sum = sum % _alphabet.size();
             }
-            ans += (sum + 'a');
+            // ans += (sum + 'a');
+            ans += _alphabet[sum];
         }
         k += n;
     }
