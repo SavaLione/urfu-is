@@ -2,6 +2,10 @@
 #include "core/compiler_version.h"
 #include "io/logger.h"
 
+#include "imgui/imgui_stdlib.h"
+
+#include <stdexcept>
+
 static void glfw_error_callback(int error, const char *description)
 {
     spdlog::error("Glfw Error {}: {}", error, description);
@@ -126,6 +130,16 @@ void gui::_run()
 
         // About window
         _about();
+
+        // Ciphers
+        additive_cipher();
+        multiplicative_cipher();
+        affine_cipher();
+        autokey_cipher();
+        playfair_cipher();
+        vigenere_cipher();
+        hill_cipher();
+        transposition_cipher();
 
         // render
         _render();
@@ -347,4 +361,184 @@ void gui::_close_all_cipher_windows()
     _show_vigenere_cipher = false;
     _show_hill_cipher = false;
     _show_transposition_cipher = false;
+}
+
+void gui::additive_cipher()
+{
+    if(_show_additive_cipher)
+    {
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoScrollbar;
+        window_flags |= ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
+
+        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+
+
+        ImGui::SetNextWindowPos(pos);
+
+        ImGui::Begin("Additive cipher", &_show_additive_cipher, window_flags);
+
+        ImGui::Text("Alphabet");
+        ImGui::Separator();
+        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
+
+        ImGui::Text("Reset alphabet:");
+        ImGui::SameLine();
+
+        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
+        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
+
+        std::string str_original =  "Original";
+        std::string str_eng_small = "Small   ";
+        std::string str_eng_big =   "Big     ";
+        std::string str_eng_all =   "All     ";
+
+        if(ImGui::Button(str_original.c_str()))
+        {
+            _additive_alphabet = str_original_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_small.c_str()))
+        {
+            _additive_alphabet = str_eng_small_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_big.c_str()))
+        {
+            _additive_alphabet = str_eng_big_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_all.c_str()))
+        {
+            _additive_alphabet = str_eng_all_alphabet;
+        }
+
+        ImGui::InputTextWithHint("Key", "enter key", &_additive_str_key);
+
+        std::string _s_key = "Key: ";
+        _s_key += std::to_string(_additive_key);
+        ImGui::Text(_s_key.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Encrypt");
+        ImGui::Separator();
+
+
+
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+
+        try
+        {
+            _additive_key = std::stoi(_additive_str_key);
+        }
+        catch(const std::exception& e)
+        {
+            _additive_key = 0;
+            spdlog::error(e.what());
+        }
+
+        if(ImGui::Button("Encrypt"))
+        {
+            ad.set_alphabet(_additive_alphabet);
+            ad.set_source_text(_additive_source_text);
+
+            ad.set_key(_additive_key);
+
+            ad.encrypt();
+
+            _additive_cipher_text = ad.get_cipher_text();
+        }
+
+        std::string str_cipher_text = "Cipher text: ";
+        str_cipher_text += ad.get_cipher_text();
+
+        ImGui::Text(str_cipher_text.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Decrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+
+        if(ImGui::Button("Decrypt"))
+        {
+            ad.set_cipher_text(_additive_cipher_text);
+            ad.set_key(_additive_key);
+
+            ad.decrypt();
+
+            _additive_source_text = ad.get_source_text();
+        }
+
+        std::string str_source_text = "Source text: ";
+        str_source_text += ad.get_source_text();
+
+        ImGui::Text(str_source_text.c_str());
+
+        ImGui::SetWindowSize(_additive_window_size);
+
+        ImGui::End(); // Additive cipher
+    }
+}
+
+void gui::multiplicative_cipher()
+{
+    if(_show_multiplicative_cipher)
+    {
+
+    }
+}
+void gui::affine_cipher()
+{
+    if(_show_affine_cipher)
+    {
+
+    }
+}
+
+void gui::autokey_cipher()
+{
+    if(_show_autokey_cipher)
+    {
+
+    }
+}
+
+void gui::playfair_cipher()
+{
+    if(_show_playfair_cipher)
+    {
+
+    }
+}
+
+void gui::vigenere_cipher()
+{
+    if(_show_vigenere_cipher)
+    {
+
+    }
+}
+
+void gui::hill_cipher()
+{
+    if(_show_hill_cipher)
+    {
+
+    }
+}
+
+void gui::transposition_cipher()
+{
+    if(_show_transposition_cipher)
+    {
+
+    }
 }

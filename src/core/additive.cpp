@@ -27,7 +27,7 @@ std::string additive::get_alphabet()
 
 void additive::set_key(int key)
 {
-    _key = key;
+    _key = key % _alphabet.size();
 }
 
 int additive::get_key()

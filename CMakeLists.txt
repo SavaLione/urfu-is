@@ -298,6 +298,12 @@ set(ISL_GUI_CORE_SRC
     src/core/settings.cpp
 )
 
+# imgui
+set(ISL_GUI_IMGUI_SRC
+    src/imgui/imgui_stdlib.h
+    src/imgui/imgui_stdlib.cpp
+)
+
 # io
 set(ISL_GUI_IO_SRC
     src/io/logger.h
@@ -307,6 +313,7 @@ set(ISL_GUI_IO_SRC
 # Sources
 set(ISL_GUI_SRC
     ${ISL_GUI_CORE_SRC}
+    ${ISL_GUI_IMGUI_SRC}
     ${ISL_GUI_IO_SRC}
 )
 
