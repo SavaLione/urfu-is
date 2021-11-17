@@ -12,6 +12,7 @@
 #include <string>
 
 #include "core/additive.h"
+#include "core/multiplicative.h"
 
 class gui
 {
@@ -20,6 +21,8 @@ public:
     ~gui();
 
 private:
+    static void _help_marker(const char* desc);
+
     /* Setup window */
     bool _setup_window();
 
@@ -101,6 +104,9 @@ private:
     std::string _additive_str_key = "0";
     int _additive_key = 0;
     ImVec2 _additive_window_size = ImVec2(606, 315);
+
+    /* Multiplicative */
+    multiplicative mp;
 
 };
 
