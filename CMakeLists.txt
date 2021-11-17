@@ -55,6 +55,14 @@ project(${ISL_PLAYFAIR_PROJECT}
     LANGUAGES CXX
 )
 
+# Шифр Виженера
+set(ISL_VIGENERE_PROJECT "6_vigenere")
+set(ISL_VIGENERE_PROJECT_VERSION "0.0.1")
+project(${ISL_VIGENERE_PROJECT}
+    VERSION ${ISL_VIGENERE_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # Шифр Хилла
 set(ISL_HILL_PROJECT "7_hill")
 set(ISL_HILL_PROJECT_VERSION "0.0.1")
@@ -156,6 +164,23 @@ set(ISL_PLAYFAIR_SRC
 add_executable(${ISL_PLAYFAIR_PROJECT} ${ISL_PLAYFAIR_SRC})
 target_include_directories(${ISL_PLAYFAIR_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Шифр Виженера ###
+# Core
+set(ISL_VIGENERE_CORE_SRC
+    src/core/vigenere_main.cpp
+    src/core/vigenere.cpp
+    src/core/vigenere.h
+)
+
+# Sources
+set(ISL_VIGENERE_SRC
+    ${ISL_VIGENERE_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_VIGENERE_PROJECT} ${ISL_VIGENERE_SRC})
+target_include_directories(${ISL_VIGENERE_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 ### Шифр Хилла ###
 # Core
 set(ISL_HILL_CORE_SRC
@@ -211,6 +236,14 @@ set_target_properties(${ISL_AUTOKEY_PROJECT}
 
 ### Шифр Плейфера ###
 set_target_properties(${ISL_PLAYFAIR_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+### Шифр Виженера ###
+set_target_properties(${ISL_VIGENERE_PROJECT}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
