@@ -633,7 +633,139 @@ void gui::affine_cipher()
 {
     if(_show_affine_cipher)
     {
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoScrollbar;
+        window_flags |= ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
 
+        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+        ImGui::SetNextWindowPos(pos);
+
+        ImGui::Begin("Affine cipher", &_show_affine_cipher, window_flags);
+
+        // if (true)
+        // {
+        //     ImVec2 size = ImGui::GetWindowSize();
+        //     spdlog::info("size x={} y={}", size.x, size.y);
+        // }
+
+        ImGui::Text("Alphabet");
+        ImGui::Separator();
+        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
+
+        ImGui::Text("Reset alphabet:");
+        ImGui::SameLine();
+
+        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
+        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
+
+        std::string str_original =  "Original";
+        std::string str_eng_small = "Small   ";
+        std::string str_eng_big =   "Big     ";
+        std::string str_eng_all =   "All     ";
+
+        if(ImGui::Button(str_original.c_str()))
+        {
+            _additive_alphabet = str_original_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_small.c_str()))
+        {
+            _additive_alphabet = str_eng_small_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_big.c_str()))
+        {
+            _additive_alphabet = str_eng_big_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_all.c_str()))
+        {
+            _additive_alphabet = str_eng_all_alphabet;
+        }
+
+        ImGui::InputTextWithHint("Key 1", "enter key 1", &_affine_str_key_1);
+        ImGui::InputTextWithHint("Key 2", "enter key 2", &_affine_str_key_2);
+
+        std::string _s_key = "Key1: ";
+        _s_key += std::to_string(_affine_key_1);
+        _s_key += " key2: ";
+        _s_key += std::to_string(_affine_key_2);
+
+        ImGui::Text(_s_key.c_str());
+        ImGui::SameLine();
+        _help_marker(
+                "The number should be able to take the inverse modulus.\n"
+                "Example numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 , 97, 101, 103, 107, 109, 113, 127...\n");
+
+        ImGui::Spacing();
+        ImGui::Text("Encrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+
+        try
+        {
+            _affine_key_1 = std::stoi(_affine_str_key_1);
+            _affine_key_2 = std::stoi(_affine_str_key_2);
+        }
+        catch(const std::exception& e)
+        {
+            _affine_key_1 = 3;
+            _affine_key_2 = 5;
+            spdlog::error(e.what());
+        }
+
+        if(ImGui::Button("Encrypt"))
+        {
+            af.set_alphabet(_additive_alphabet);
+            af.set_source_text(_additive_source_text);
+
+            af.set_key_a(_affine_key_1);
+            af.set_key_b(_affine_key_2);
+
+            af.encrypt();
+
+            _additive_cipher_text = af.get_cipher_text();
+        }
+
+        std::string str_cipher_text = "Cipher text: ";
+        str_cipher_text += af.get_cipher_text();
+
+        ImGui::Text(str_cipher_text.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Decrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+
+        if(ImGui::Button("Decrypt"))
+        {
+            af.set_cipher_text(_additive_cipher_text);
+
+            af.set_key_a(_affine_key_1);
+            af.set_key_b(_affine_key_2);
+
+            af.decrypt();
+
+            _additive_source_text = af.get_source_text();
+        }
+
+        std::string str_source_text = "Source text: ";
+        str_source_text += af.get_source_text();
+
+        ImGui::Text(str_source_text.c_str());
+
+        ImGui::SetWindowSize(_affine_window_size);
+
+        ImGui::End(); // Additive cipher
     }
 }
 

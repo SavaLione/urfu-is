@@ -13,6 +13,7 @@
 
 #include "core/additive.h"
 #include "core/multiplicative.h"
+#include "core/affine.h"
 
 class gui
 {
@@ -107,6 +108,14 @@ private:
 
     /* Multiplicative */
     multiplicative mp;
+
+    /* Affine */
+    affine af;
+    int _affine_key_1 = 3;
+    int _affine_key_2 = 5;
+    std::string _affine_str_key_1 = "3";
+    std::string _affine_str_key_2 = "5";
+    ImVec2 _affine_window_size = ImVec2(606, 336);
 
 };
 

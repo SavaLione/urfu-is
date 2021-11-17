@@ -79,6 +79,7 @@ std::string affine::get_key_ab()
 
 void affine::encrypt()
 {
+    _cipher_text = "";
     int power = get_power();
     for (int i = 0; i < _source_text.size(); i++)
     {
@@ -88,6 +89,7 @@ void affine::encrypt()
 
 void affine::decrypt()
 {
+    _source_text = "";
     int power = get_power();
     int inverse = _modular_inverse(_key_a, power);
     for (int i = 0; i < _cipher_text.size(); i++)
