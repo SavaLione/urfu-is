@@ -516,7 +516,7 @@ void gui::multiplicative_cipher()
 
         ImGui::SetNextWindowPos(pos);
 
-        ImGui::Begin("Multiplicative cipher", &_show_additive_cipher, window_flags);
+        ImGui::Begin("Multiplicative cipher", &_show_multiplicative_cipher, window_flags);
 
         ImGui::Text("Alphabet");
         ImGui::Separator();
