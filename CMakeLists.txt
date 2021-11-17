@@ -125,6 +125,9 @@ set(IMGUI_BUILD_BACKEND_GLFW ON CACHE BOOL "" FORCE)
 set(IMGUI_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/imgui/include" CACHE PATH "imgui lib include")
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/imgui)
 
+# spdlog
+set(SPDLOG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/spdlog/include" CACHE PATH "spdlog lib include")
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/spdlog)
 
 #################################################################################
 #                                     Sources                                   #
@@ -267,7 +270,7 @@ add_executable(${ISL_TRANSPOSITION_PROJECT} ${ISL_TRANSPOSITION_SRC})
 target_include_directories(${ISL_TRANSPOSITION_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 ### Графическое приложение со всеми шифрами ###
-# Core
+# core
 set(ISL_GUI_CORE_SRC
     src/core/gui_main.cpp
     src/core/gui_main.h
@@ -289,11 +292,22 @@ set(ISL_GUI_CORE_SRC
     src/core/hill.h
     src/core/transposition.cpp
     src/core/transposition.h
+    src/core/compiler_version.cpp
+    src/core/compiler_version.h
+    src/core/settings.h
+    src/core/settings.cpp
+)
+
+# io
+set(ISL_GUI_IO_SRC
+    src/io/logger.h
+    src/io/logger.cpp
 )
 
 # Sources
 set(ISL_GUI_SRC
     ${ISL_GUI_CORE_SRC}
+    ${ISL_GUI_IO_SRC}
 )
 
 # executable
@@ -314,6 +328,10 @@ target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${GLFW_INCLUDE_DIR})
 # imgui
 target_link_libraries(${ISL_GUI_PROJECT} imgui imgui_glfw imgui_opengl3)
 target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${IMGUI_INCLUDE_DIR})
+
+# spdlog
+target_link_libraries(${ISL_GUI_PROJECT} spdlog)
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${SPDLOG_INCLUDE_DIR})
 
 #################################################################################
 #                                 Output directory                              #
