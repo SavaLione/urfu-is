@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021, Savely Pototsky (SavaLione)
+ * All rights reserved.
+ */
+#ifndef CORE_MULTIPLICATIVE_H
+#define CORE_MULTIPLICATIVE_H
+
 #include <string>
 
 class multiplicative
@@ -35,3 +42,5 @@ private:
 
     int _modular_inverse(int a, int m);
 };
+
+#endif // CORE_MULTIPLICATIVE_H

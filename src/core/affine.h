@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021, Savely Pototsky (SavaLione)
+ * All rights reserved.
+ */
+#ifndef CORE_AFFINE_H
+#define CORE_AFFINE_H
 
 #include <string>
 
@@ -42,3 +48,5 @@ private:
     int gcd(int a, int b);
     int _modular_inverse(int a, int m);
 };
+
+#endif // CORE_AFFINE_H

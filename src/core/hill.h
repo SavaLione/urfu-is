@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021, Savely Pototsky (SavaLione)
+ * All rights reserved.
+ */
+#ifndef CORE_HILL_H
+#define CORE_HILL_H
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -21,3 +28,5 @@ private:
 
     int _get_num(char const& ch);
 };
+
+#endif // CORE_HILL_H

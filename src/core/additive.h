@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2021, Savely Pototsky (SavaLione)
+ * All rights reserved.
+ */
+#ifndef CORE_ADDITIVE_H
+#define CORE_ADDITIVE_H
+
 #include <string>
 
 class additive
@@ -30,3 +37,5 @@ private:
 
     int _find(char character);
 };
+
+#endif // CORE_ADDITIVE_H
