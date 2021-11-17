@@ -79,9 +79,52 @@ project(${ISL_TRANSPOSITION_PROJECT}
     LANGUAGES CXX
 )
 
+# Графическое приложение со всеми шифрами
+set(ISL_GUI_PROJECT "0_gui")
+set(ISL_GUI_PROJECT_VERSION "0.0.1")
+project(${ISL_GUI_PROJECT}
+    VERSION ${ISL_GUI_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")           # debug
+
+#################################################################################
+#                               Macros and functions                            #
+#################################################################################
+# Output directory
+function(isl_out arg_project)
+    set_target_properties(${arg_project}
+        PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+    )
+endfunction(isl_out)
+
+#################################################################################
+#                                    Libraries                                  #
+#################################################################################
+# OpenGL
+find_package(OpenGL REQUIRED)
+
+# GLFW
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
+
+set(GLFW_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/glfw/include" CACHE PATH "GLFW lib include")
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/glfw)
+
+# imgui
+set(IMGUI_BUILD_BACKEND_OPENGL3 ON CACHE BOOL "" FORCE)
+set(IMGUI_BUILD_BACKEND_GLFW ON CACHE BOOL "" FORCE)
+
+set(IMGUI_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/imgui/include" CACHE PATH "imgui lib include")
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/imgui)
+
 
 #################################################################################
 #                                     Sources                                   #
@@ -223,70 +266,64 @@ set(ISL_TRANSPOSITION_SRC
 add_executable(${ISL_TRANSPOSITION_PROJECT} ${ISL_TRANSPOSITION_SRC})
 target_include_directories(${ISL_TRANSPOSITION_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Графическое приложение со всеми шифрами ###
+# Core
+set(ISL_GUI_CORE_SRC
+    src/core/gui_main.cpp
+    src/core/gui_main.h
+    src/core/gui.cpp
+    src/core/gui.h
+    src/core/additive.cpp
+    src/core/additive.h
+    src/core/multiplicative.cpp
+    src/core/multiplicative.h
+    src/core/affine.cpp
+    src/core/affine.h
+    src/core/autokey.cpp
+    src/core/autokey.h
+    src/core/playfair.cpp
+    src/core/playfair.h
+    src/core/vigenere.cpp
+    src/core/vigenere.h
+    src/core/hill.cpp
+    src/core/hill.h
+    src/core/transposition.cpp
+    src/core/transposition.h
+)
+
+# Sources
+set(ISL_GUI_SRC
+    ${ISL_GUI_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_GUI_PROJECT} ${ISL_GUI_SRC})
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+#################################################################################
+#                                Libraries include                              #
+#################################################################################
+# OpenGL
+target_link_libraries(${ISL_GUI_PROJECT} ${OPENGL_gl_LIBRARY})
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${OPENGL_INCLUDE_DIR})
+
+# GLFW
+target_link_libraries(${ISL_GUI_PROJECT} glfw)
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${GLFW_INCLUDE_DIR})
+
+# imgui
+target_link_libraries(${ISL_GUI_PROJECT} imgui imgui_glfw imgui_opengl3)
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${IMGUI_INCLUDE_DIR})
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
-
-### Аддитивный шифр ###
-set_target_properties(${ISL_ADDITIVE_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Мультипликативный шифр ###
-set_target_properties(${ISL_MULTIPLICATIVE_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Аффинный шифр ###
-set_target_properties(${ISL_AFFINE_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Автоключевой шифр ###
-set_target_properties(${ISL_AUTOKEY_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Шифр Плейфера ###
-set_target_properties(${ISL_PLAYFAIR_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Шифр Виженера ###
-set_target_properties(${ISL_VIGENERE_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Шифр Хилла ###
-set_target_properties(${ISL_HILL_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
-
-### Шифр перестановки ###
-set_target_properties(${ISL_TRANSPOSITION_PROJECT}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
+isl_out(${ISL_ADDITIVE_PROJECT})        # Аддитивный шифр
+isl_out(${ISL_MULTIPLICATIVE_PROJECT})  # Мультипликативный шифр
+isl_out(${ISL_AFFINE_PROJECT})          # Аффинный шифр
+isl_out(${ISL_AUTOKEY_PROJECT})         # Автоключевой шифр
+isl_out(${ISL_PLAYFAIR_PROJECT})        # Шифр Плейфера
+isl_out(${ISL_VIGENERE_PROJECT})        # Шифр Виженера
+isl_out(${ISL_HILL_PROJECT})            # Шифр Хилла
+isl_out(${ISL_TRANSPOSITION_PROJECT})   # Шифр перестановки
+isl_out(${ISL_GUI_PROJECT})             # Графическое приложение со всеми шифрами
