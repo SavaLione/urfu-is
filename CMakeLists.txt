@@ -71,6 +71,14 @@ project(${ISL_HILL_PROJECT}
     LANGUAGES CXX
 )
 
+# Шифр перестановки
+set(ISL_TRANSPOSITION_PROJECT "8_transposition")
+set(ISL_TRANSPOSITION_PROJECT_VERSION "0.0.1")
+project(${ISL_TRANSPOSITION_PROJECT}
+    VERSION ${ISL_TRANSPOSITION_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -g")           # debug
@@ -198,6 +206,23 @@ set(ISL_HILL_SRC
 add_executable(${ISL_HILL_PROJECT} ${ISL_HILL_SRC})
 target_include_directories(${ISL_HILL_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Шифр перестановки ###
+# Core
+set(ISL_TRANSPOSITION_CORE_SRC
+    src/core/transposition_main.cpp
+    src/core/transposition.cpp
+    src/core/transposition.h
+)
+
+# Sources
+set(ISL_TRANSPOSITION_SRC
+    ${ISL_TRANSPOSITION_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_TRANSPOSITION_PROJECT} ${ISL_TRANSPOSITION_SRC})
+target_include_directories(${ISL_TRANSPOSITION_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
@@ -252,6 +277,14 @@ set_target_properties(${ISL_VIGENERE_PROJECT}
 
 ### Шифр Хилла ###
 set_target_properties(${ISL_HILL_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+### Шифр перестановки ###
+set_target_properties(${ISL_TRANSPOSITION_PROJECT}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
