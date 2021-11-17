@@ -150,7 +150,11 @@ void gui::_about()
 {
     if (_show_about)
     {
-        ImGui::Begin("About", &_show_about);
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
+
+        ImGui::Begin("About", &_show_about, window_flags);
 
         ImGui::Text("Author: Savely Pototsky (SavaLione)");
         ImGui::Text("Group:  FOM-110510");
@@ -177,7 +181,170 @@ void gui::_about()
 
 void gui::_window_main()
 {
-    ImGui::Begin("Main window");
+    ImGuiWindowFlags window_flags = 0;
+    window_flags |= ImGuiWindowFlags_NoScrollbar;
+    window_flags |= ImGuiWindowFlags_NoMove;
+    window_flags |= ImGuiWindowFlags_NoResize;
+    window_flags |= ImGuiWindowFlags_NoCollapse;
 
-    ImGui::End();
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+
+    ImGui::Begin("Select cipher", &_show_main_window, window_flags);
+
+    ImGui::SetWindowSize(_main_window_size);
+
+    // if (true)
+    // {
+    //     ImVec2 size = ImGui::GetWindowSize();
+    //     spdlog::info("size x={} y={}", size.x, size.y);
+    // }
+
+    ImGui::Text("Ciphers");
+    ImGui::Separator();
+
+    std::string str_additive        = "(1) Additive      ";
+    std::string str_multiplicative  = "(2) Multiplicative";
+    std::string str_affine          = "(3) Affine        ";
+    std::string str_autokey         = "(4) Autokey       ";
+    std::string str_playfair        = "(5) Playfair      ";
+    std::string str_vigenere        = "(6) Vigenere      ";
+    std::string str_hill            = "(7) Hill          ";
+    std::string str_transposition   = "(8) Transposition ";
+    std::string str_about           = "About                ";
+
+    std::string str_spaces = "   ";
+    std::string str_choice = "-> ";
+
+    if(_show_additive_cipher)
+    {
+        str_additive.insert(0, str_choice);
+    }
+    else
+    {
+        str_additive.insert(0, str_spaces);
+    }
+
+    if(_show_multiplicative_cipher)
+    {
+        str_multiplicative.insert(0, str_choice);
+    }
+    else
+    {
+        str_multiplicative.insert(0, str_spaces);
+    }
+
+    if(_show_affine_cipher)
+    {
+        str_affine.insert(0, str_choice);
+    }
+    else
+    {
+        str_affine.insert(0, str_spaces);
+    }
+
+    if(_show_autokey_cipher)
+    {
+        str_autokey.insert(0, str_choice);
+    }
+    else
+    {
+        str_autokey.insert(0, str_spaces);
+    }
+
+    if(_show_playfair_cipher)
+    {
+        str_playfair.insert(0, str_choice);
+    }
+    else
+    {
+        str_playfair.insert(0, str_spaces);
+    }
+
+    if(_show_vigenere_cipher)
+    {
+        str_vigenere.insert(0, str_choice);
+    }
+    else
+    {
+        str_vigenere.insert(0, str_spaces);
+    }
+
+    if(_show_hill_cipher)
+    {
+        str_hill.insert(0, str_choice);
+    }
+    else
+    {
+        str_hill.insert(0, str_spaces);
+    }
+
+    if(_show_transposition_cipher)
+    {
+        str_transposition.insert(0, str_choice);
+    }
+    else
+    {
+        str_transposition.insert(0, str_spaces);
+    }
+
+    if (ImGui::Button(str_additive.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_additive_cipher = true;
+    }
+    if (ImGui::Button(str_multiplicative.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_multiplicative_cipher = true;
+    }
+    if (ImGui::Button(str_affine.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_affine_cipher = true;
+    }
+    if (ImGui::Button(str_autokey.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_autokey_cipher = true;
+    }
+    if (ImGui::Button(str_playfair.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_playfair_cipher = true;
+    }
+    if (ImGui::Button(str_vigenere.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_vigenere_cipher = true;
+    }
+    if (ImGui::Button(str_hill.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_hill_cipher = true;
+    }
+    if (ImGui::Button(str_transposition.c_str()))
+    {
+        _close_all_cipher_windows();
+        _show_transposition_cipher = true;
+    }
+
+    ImGui::Separator();
+    if (ImGui::Button(str_about.c_str()))
+    {
+        _show_about = true;
+    }
+
+    ImGui::End(); // Main window
+}
+
+void gui::_close_all_cipher_windows()
+{
+    _show_additive_cipher = false;
+    _show_multiplicative_cipher = false;
+    _show_affine_cipher = false;
+    _show_autokey_cipher = false;
+    _show_playfair_cipher = false;
+    _show_vigenere_cipher = false;
+    _show_hill_cipher = false;
+    _show_transposition_cipher = false;
 }

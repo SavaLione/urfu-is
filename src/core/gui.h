@@ -46,6 +46,9 @@ private:
     /* Show main window */
     bool _show_main_window = true;
 
+    /* Main window size */
+    ImVec2 _main_window_size = ImVec2(168, 262);
+
     /* States */
     bool _show_gui_window = true;
 
@@ -62,10 +65,31 @@ private:
     void _about();
 
     /* Authow window show */
-    bool _show_about = true;
+    bool _show_about = false;
 
     /* main window */
     void _window_main();
+
+    /* Ciphers */
+    bool _show_additive_cipher = false;
+    bool _show_multiplicative_cipher = false;
+    bool _show_affine_cipher = false;
+    bool _show_autokey_cipher = false;
+    bool _show_playfair_cipher = false;
+    bool _show_vigenere_cipher = false;
+    bool _show_hill_cipher = false;
+    bool _show_transposition_cipher = false;
+
+    void _close_all_cipher_windows();
+
+    void additive_cipher();
+    void multiplicative_cipher();
+    void affine_cipher();
+    void autokey_cipher();
+    void playfair_cipher();
+    void vigenere_cipher();
+    void hill_cipher();
+    void transposition_cipher();
 };
 
 #endif // CORE_GUI_H
