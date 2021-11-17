@@ -47,6 +47,14 @@ project(${ISL_AUTOKEY_PROJECT}
     LANGUAGES CXX
 )
 
+# Шифр Плейфера
+set(ISL_PLAYFAIR_PROJECT "5_playfair")
+set(ISL_PLAYFAIR_PROJECT_VERSION "0.0.1")
+project(${ISL_PLAYFAIR_PROJECT}
+    VERSION ${ISL_PLAYFAIR_PROJECT_VERSION}
+    LANGUAGES CXX
+)
+
 # Шифр Хилла
 set(ISL_HILL_PROJECT "7_hill")
 set(ISL_HILL_PROJECT_VERSION "0.0.1")
@@ -131,6 +139,23 @@ set(ISL_AUTOKEY_SRC
 add_executable(${ISL_AUTOKEY_PROJECT} ${ISL_AUTOKEY_SRC})
 target_include_directories(${ISL_AUTOKEY_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
+### Шифр Плейфера ###
+# Core
+set(ISL_PLAYFAIR_CORE_SRC
+    src/core/playfair_main.cpp
+    src/core/playfair.cpp
+    src/core/playfair.h
+)
+
+# Sources
+set(ISL_PLAYFAIR_SRC
+    ${ISL_PLAYFAIR_CORE_SRC}
+)
+
+# executable
+add_executable(${ISL_PLAYFAIR_PROJECT} ${ISL_PLAYFAIR_SRC})
+target_include_directories(${ISL_PLAYFAIR_PROJECT} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
 ### Шифр Хилла ###
 # Core
 set(ISL_HILL_CORE_SRC
@@ -178,6 +203,14 @@ set_target_properties(${ISL_AFFINE_PROJECT}
 
 ### Автоключевой шифр ###
 set_target_properties(${ISL_AUTOKEY_PROJECT}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+### Шифр Плейфера ###
+set_target_properties(${ISL_PLAYFAIR_PROJECT}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
