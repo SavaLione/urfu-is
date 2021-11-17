@@ -94,7 +94,7 @@ void gui::_imgui_init()
 
 void gui::_window_test()
 {
-    if(_window_test_show)
+    if (_window_test_show)
     {
         ImGui::ShowDemoWindow();
     }
@@ -121,6 +121,12 @@ void gui::_run()
         // Imgui test window
         _window_test();
 
+        // Main window
+        _window_main();
+
+        // About window
+        _about();
+
         // render
         _render();
     }
@@ -142,8 +148,10 @@ void gui::_render()
 
 void gui::_about()
 {
-    if (ImGui::CollapsingHeader("About"))
+    if (_show_about)
     {
+        ImGui::Begin("About", &_show_about);
+
         ImGui::Text("Author: Savely Pototsky (SavaLione)");
         ImGui::Text("Group:  FOM-110510");
         ImGui::Text("Date:   2021-09-16");
@@ -162,5 +170,14 @@ void gui::_about()
         _date += __TIME__;
         ImGui::Text(_date.c_str());
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+        ImGui::End(); // About
     }
+}
+
+void gui::_window_main()
+{
+    ImGui::Begin("Main window");
+
+    ImGui::End();
 }

@@ -60,6 +60,12 @@ private:
 
     /* Author */
     void _about();
+
+    /* Authow window show */
+    bool _show_about = true;
+
+    /* main window */
+    void _window_main();
 };
 
 #endif // CORE_GUI_H
