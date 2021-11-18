@@ -17,6 +17,8 @@
 #include "core/autokey.h"
 #include "core/playfair.h"
 #include "core/vigenere.h"
+//#include "core/hill.h"
+#include "core/transposition.h"
 
 class gui
 {
@@ -136,6 +138,12 @@ private:
     std::string _vigenere_key = "";
     std::string _vigenere_source_text = "";
     std::string _vigenere_cipher_text = "";
+
+    /* Transposition */
+    transposition tp;
+    std::string _transposition_key = "";
+    std::string _transposition_source_text = "";
+    std::string _transposition_cipher_text = "";
 };
 
 #endif // CORE_GUI_H

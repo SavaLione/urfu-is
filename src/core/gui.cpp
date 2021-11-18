@@ -1073,6 +1073,68 @@ void gui::transposition_cipher()
 {
     if(_show_transposition_cipher)
     {
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoScrollbar;
+        window_flags |= ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
 
+        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+
+
+        ImGui::SetNextWindowPos(pos);
+
+        ImGui::Begin("Playfair cipher", &_show_transposition_cipher, window_flags);
+
+        ImGui::InputTextWithHint("Key", "enter key", &_transposition_key);
+
+        std::string _s_key = "Key: ";
+        _s_key += _transposition_key;
+        ImGui::Text(_s_key.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Encrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_transposition_source_text);
+
+        if(ImGui::Button("Encrypt"))
+        {
+            tp.set_key(_transposition_key);
+            tp.set_source_text(_transposition_source_text);
+            tp.encrypt();
+
+            _transposition_cipher_text = tp.get_cipher_text();
+        }
+
+        std::string str_cipher_text = "Cipher text: ";
+        str_cipher_text += tp.get_cipher_text();
+
+        ImGui::Text(str_cipher_text.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Decrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_transposition_cipher_text);
+
+        if(ImGui::Button("Decrypt"))
+        {
+            tp.set_key(_transposition_key);
+            tp.set_cipher_text(_transposition_cipher_text);
+
+            tp.decrypt();
+
+            _transposition_source_text = tp.get_source_text();
+        }
+
+        std::string str_source_text = "Source text: ";
+        str_source_text += tp.get_source_text();
+
+        ImGui::Text(str_source_text.c_str());
+
+        ImGui::SetWindowSize(_additive_window_size);
+
+        ImGui::End(); // Additive cipher
     }
 }

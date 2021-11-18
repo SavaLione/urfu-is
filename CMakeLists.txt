@@ -13,7 +13,7 @@ cmake_minimum_required (VERSION 3.13.1)
 #   + Плейфера
 #   + Виженера
 #   * Хила
-#   Шифр перестановки
+#   + Шифр перестановки
 
 # Аддитивный шифр
 set(ISL_ADDITIVE_PROJECT "1_additive")
