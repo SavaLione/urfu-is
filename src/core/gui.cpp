@@ -692,25 +692,25 @@ void gui::playfair_cipher()
 
         ImGui::Begin("Playfair cipher", &_show_playfair_cipher, window_flags);
 
-        ImGui::InputTextWithHint("Key", "enter key", &_playfair_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += _playfair_key;
+        _s_key += _key;
         ImGui::Text(_s_key.c_str());
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_playfair_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
-            pf.set_source_text(_playfair_source_text);
-            pf.set_key(_playfair_key);
+            pf.set_source_text(_source_text);
+            pf.set_key(_key);
             pf.encrypt();
 
-            _playfair_cipher_text = pf.get_cipher_text();
+            _cipher_text = pf.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -722,16 +722,15 @@ void gui::playfair_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_playfair_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
-            pf.set_cipher_text(_playfair_cipher_text);
-            pf.set_key(_playfair_key);
-
+            pf.set_cipher_text(_cipher_text);
+            pf.set_key(_key);
             pf.decrypt();
 
-            _playfair_source_text = pf.get_source_text();
+            _source_text = pf.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -741,7 +740,7 @@ void gui::playfair_cipher()
 
         ImGui::SetWindowSize(_additive_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Playfair cipher
     }
 }
 
@@ -763,25 +762,26 @@ void gui::vigenere_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key", "enter key", &_vigenere_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += _vigenere_key;
+        _s_key += _key;
         ImGui::Text(_s_key.c_str());
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_vigenere_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
             vr.set_alphabet(_alphabet);
-            vr.set_source_text(_vigenere_source_text);
-            vr.set_key(_vigenere_key);
+            vr.set_source_text(_source_text);
+            vr.set_key(_key);
             vr.encrypt();
-            _vigenere_cipher_text = vr.get_cipher_text();
+
+            _cipher_text = vr.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -793,15 +793,16 @@ void gui::vigenere_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_vigenere_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
             vr.set_alphabet(_alphabet);
-            vr.set_cipher_text(_vigenere_cipher_text);
-            vr.set_key(_vigenere_key);
+            vr.set_cipher_text(_cipher_text);
+            vr.set_key(_key);
             vr.decrypt();
-            _vigenere_source_text = vr.get_source_text();
+
+            _source_text = vr.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -811,7 +812,7 @@ void gui::vigenere_cipher()
 
         ImGui::SetWindowSize(_additive_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Vigenere cipher
     }
 }
 
@@ -838,25 +839,25 @@ void gui::transposition_cipher()
 
         ImGui::Begin("Transposition cipher", &_show_transposition_cipher, window_flags);
 
-        ImGui::InputTextWithHint("Key", "enter key", &_transposition_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += _transposition_key;
+        _s_key += _key;
         ImGui::Text(_s_key.c_str());
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_transposition_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
-            tp.set_key(_transposition_key);
-            tp.set_source_text(_transposition_source_text);
+            tp.set_key(_key);
+            tp.set_source_text(_source_text);
             tp.encrypt();
 
-            _transposition_cipher_text = tp.get_cipher_text();
+            _cipher_text = tp.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -868,16 +869,15 @@ void gui::transposition_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_transposition_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
-            tp.set_key(_transposition_key);
-            tp.set_cipher_text(_transposition_cipher_text);
-
+            tp.set_key(_key);
+            tp.set_cipher_text(_cipher_text);
             tp.decrypt();
 
-            _transposition_source_text = tp.get_source_text();
+            _source_text = tp.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -887,7 +887,7 @@ void gui::transposition_cipher()
 
         ImGui::SetWindowSize(_additive_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Transposition cipher
     }
 }
 

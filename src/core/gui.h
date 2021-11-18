@@ -111,10 +111,6 @@ private:
 
     /* Affine */
     affine af;
-    // int _affine_key_1 = 3;
-    // int _affine_key_2 = 5;
-    // std::string _affine_str_key_1 = "3";
-    // std::string _affine_str_key_2 = "5";
     ImVec2 _affine_window_size = ImVec2(606, 336);
 
     /* Autokey */
@@ -123,22 +119,22 @@ private:
 
     /* Playfair */
     playfair pf;
-    std::string _playfair_key = "";
-    std::string _playfair_source_text = "";
-    std::string _playfair_cipher_text = "";
+    // std::string _playfair_key = "";
+    // std::string _playfair_source_text = "";
+    // std::string _playfair_cipher_text = "";
 
     /* Vigenere */
     vigenere vr;
     //std::string _vigenere_alphabet = "";
-    std::string _vigenere_key = "";
-    std::string _vigenere_source_text = "";
-    std::string _vigenere_cipher_text = "";
+    // std::string _vigenere_key = "";
+    // std::string _vigenere_source_text = "";
+    // std::string _vigenere_cipher_text = "";
 
     /* Transposition */
     transposition tp;
-    std::string _transposition_key = "";
-    std::string _transposition_source_text = "";
-    std::string _transposition_cipher_text = "";
+    // std::string _transposition_key = "";
+    // std::string _transposition_source_text = "";
+    // std::string _transposition_cipher_text = "";
 
     /* other */
 
