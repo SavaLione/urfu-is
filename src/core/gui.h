@@ -104,11 +104,6 @@ private:
 
     /* Additive */
     additive ad;
-    // std::string _additive_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-    // std::string _additive_source_text = "The quick brown fox jumps over the lazy dog";
-    // std::string _additive_cipher_text = "";
-    // std::string _additive_str_key = "0";
-    int _additive_key = 0;
     ImVec2 _additive_window_size = ImVec2(606, 315);
 
     /* Multiplicative */
