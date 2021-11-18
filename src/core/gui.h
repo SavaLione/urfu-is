@@ -67,7 +67,7 @@ private:
     void _window_test();
 
     /* Imgui test window show */
-    bool _window_test_show = true;
+    bool _window_test_show = false;
 
     /* Author */
     void _about();
