@@ -773,7 +773,113 @@ void gui::autokey_cipher()
 {
     if(_show_autokey_cipher)
     {
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoScrollbar;
+        window_flags |= ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
 
+        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+
+
+        ImGui::SetNextWindowPos(pos);
+
+        ImGui::Begin("Autokey cipher", &_show_autokey_cipher, window_flags);
+
+        ImGui::Text("Alphabet");
+        ImGui::Separator();
+        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
+
+        ImGui::Text("Reset alphabet:");
+        ImGui::SameLine();
+
+        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
+        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
+
+        std::string str_original =  "Original";
+        std::string str_eng_small = "Small   ";
+        std::string str_eng_big =   "Big     ";
+        std::string str_eng_all =   "All     ";
+
+        if(ImGui::Button(str_original.c_str()))
+        {
+            _additive_alphabet = str_original_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_small.c_str()))
+        {
+            _additive_alphabet = str_eng_small_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_big.c_str()))
+        {
+            _additive_alphabet = str_eng_big_alphabet;
+        }
+        ImGui::SameLine();
+
+        if(ImGui::Button(str_eng_all.c_str()))
+        {
+            _additive_alphabet = str_eng_all_alphabet;
+        }
+
+        ImGui::InputTextWithHint("Key", "enter key", &_autokey_key);
+
+        std::string _s_key = "Key: ";
+        _s_key += _autokey_key;
+        ImGui::Text(_s_key.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Encrypt");
+        ImGui::Separator();
+
+
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+
+        if(ImGui::Button("Encrypt"))
+        {
+            ak.set_alphabet(_additive_alphabet);
+            ak.set_source_text(_additive_source_text);
+
+            ak.set_key(_autokey_key);
+
+            ak.encrypt();
+
+            _additive_cipher_text = ak.get_cipher_text();
+        }
+
+        std::string str_cipher_text = "Cipher text: ";
+        str_cipher_text += ak.get_cipher_text();
+
+        ImGui::Text(str_cipher_text.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Decrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+
+        if(ImGui::Button("Decrypt"))
+        {
+            ak.set_cipher_text(_additive_cipher_text);
+            // ak.set_key(_autokey_key);
+
+            ak.decrypt();
+
+            _additive_source_text = ak.get_source_text();
+        }
+
+        std::string str_source_text = "Source text: ";
+        str_source_text += ak.get_source_text();
+
+        ImGui::Text(str_source_text.c_str());
+
+        ImGui::SetWindowSize(_additive_window_size);
+
+        ImGui::End(); // Additive cipher
     }
 }
 

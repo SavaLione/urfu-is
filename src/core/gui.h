@@ -14,6 +14,7 @@
 #include "core/additive.h"
 #include "core/multiplicative.h"
 #include "core/affine.h"
+#include "core/autokey.h"
 
 class gui
 {
@@ -116,6 +117,10 @@ private:
     std::string _affine_str_key_1 = "3";
     std::string _affine_str_key_2 = "5";
     ImVec2 _affine_window_size = ImVec2(606, 336);
+
+    /* Autokey */
+    autokey ak;
+    std::string _autokey_key;
 
 };
 
