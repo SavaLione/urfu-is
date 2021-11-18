@@ -540,13 +540,13 @@ void gui::affine_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key 1", "enter key 1", &_affine_str_key_1);
-        ImGui::InputTextWithHint("Key 2", "enter key 2", &_affine_str_key_2);
+        ImGui::InputTextWithHint("Key 1", "enter key 1", &_key_a);
+        ImGui::InputTextWithHint("Key 2", "enter key 2", &_key_b);
 
-        std::string _s_key = "Key1: ";
-        _s_key += std::to_string(_affine_key_1);
-        _s_key += " key2: ";
-        _s_key += std::to_string(_affine_key_2);
+        std::string _s_key = "Key_1: ";
+        _s_key += af.get_key_a();
+        _s_key += " key_2: ";
+        _s_key += af.get_key_b();
 
         ImGui::Text(_s_key.c_str());
         ImGui::SameLine();
@@ -560,24 +560,12 @@ void gui::affine_cipher()
 
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
-        try
-        {
-            _affine_key_1 = std::stoi(_affine_str_key_1);
-            _affine_key_2 = std::stoi(_affine_str_key_2);
-        }
-        catch (const std::exception &e)
-        {
-            _affine_key_1 = 3;
-            _affine_key_2 = 5;
-            spdlog::error(e.what());
-        }
-
         if (ImGui::Button("Encrypt"))
         {
             af.set_alphabet(_alphabet);
             af.set_source_text(_source_text);
-            af.set_key_a(_affine_key_1);
-            af.set_key_b(_affine_key_2);
+            af.set_key_a(_key_a);
+            af.set_key_b(_key_b);
             af.encrypt();
 
             _cipher_text = af.get_cipher_text();
@@ -598,8 +586,8 @@ void gui::affine_cipher()
         {
             af.set_alphabet(_alphabet);
             af.set_cipher_text(_cipher_text);
-            af.set_key_a(_affine_key_1);
-            af.set_key_b(_affine_key_2);
+            af.set_key_a(_key_a);
+            af.set_key_b(_key_b);
             af.decrypt();
 
             _source_text = af.get_source_text();

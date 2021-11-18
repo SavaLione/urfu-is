@@ -16,12 +16,8 @@ public:
     std::string get_source_text();
     std::string get_cipher_text();
     std::string get_alphabet();
-
-    void set_key_a(int key);
-    void set_key_b(int key);
-    int get_key_a();
-    int get_key_b();
-    std::string get_key_ab();
+    std::string get_key_a();
+    std::string get_key_b();
 
     int get_power();
 
@@ -31,16 +27,16 @@ public:
     void set_alphabet(std::string alphabet);
     void set_source_text(std::string source_text);
     void set_cipher_text(std::string cipher_text);
-
-    std::string print();
+    void set_key_a(std::string key_a);
+    void set_key_b(std::string key_b);
 
 private:
     std::string _alphabet;
     std::string _source_text;
     std::string _cipher_text;
 
-    int _key_a = 0;
-    int _key_b = 0;
+    int _key_a = 3;
+    int _key_b = 5;
 
     int _find(char character);
     char _find_char(int ch);

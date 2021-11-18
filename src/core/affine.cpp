@@ -49,32 +49,56 @@ int affine::_find(char character)
     return found;
 }
 
-void affine::set_key_a(int key)
+void affine::set_key_a(std::string key_a)
 {
-    _key_a = key;
+    int ret = 0;
+    if (key_a == "")
+    {
+        return;
+    }
+
+    try
+    {
+        ret = std::stoi(key_a);
+    }
+    catch (const std::exception &e)
+    {
+        ret = 0;
+        // spdlog::error(e.what());
+    }
+
+    _key_a = ret;
 }
 
-void affine::set_key_b(int key)
+void affine::set_key_b(std::string key_b)
 {
-    _key_b = key;
+    int ret = 0;
+    if (key_b == "")
+    {
+        return;
+    }
+
+    try
+    {
+        ret = std::stoi(key_b);
+    }
+    catch (const std::exception &e)
+    {
+        ret = 0;
+        // spdlog::error(e.what());
+    }
+
+    _key_b = ret;
 }
 
-int affine::get_key_a()
+std::string affine::get_key_a()
 {
-    return _key_a;
+    return std::to_string(_key_a);
 }
 
-int affine::get_key_b()
+std::string affine::get_key_b()
 {
-    return _key_b;
-}
-
-std::string affine::get_key_ab()
-{
-    std::string ret = std::to_string(_key_a);
-    ret += " ";
-    ret += std::to_string(_key_b);
-    return ret;
+    return std::to_string(_key_b);
 }
 
 void affine::encrypt()
@@ -126,31 +150,4 @@ char affine::_find_char(int ch)
 {
     return _alphabet[ch % get_power()];
     //return _alphabet[ch];
-}
-
-std::string affine::print()
-{
-    std::string ret;
-
-    ret += "alphabet: [";
-    ret += _alphabet;
-    ret += "]\n";
-
-    ret += "source text: ";
-    ret += _source_text;
-    ret += "\n";
-
-    ret += "cipher text: ";
-    ret += _cipher_text;
-    ret += "\n";
-
-    ret += "key a: ";
-    ret += std::to_string(_key_a);
-    ret += "\n";
-
-    ret += "key b: ";
-    ret += std::to_string(_key_b);
-    ret += "\n\n";
-
-    return ret;
 }

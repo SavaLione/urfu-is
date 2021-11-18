@@ -111,10 +111,10 @@ private:
 
     /* Affine */
     affine af;
-    int _affine_key_1 = 3;
-    int _affine_key_2 = 5;
-    std::string _affine_str_key_1 = "3";
-    std::string _affine_str_key_2 = "5";
+    // int _affine_key_1 = 3;
+    // int _affine_key_2 = 5;
+    // std::string _affine_str_key_1 = "3";
+    // std::string _affine_str_key_2 = "5";
     ImVec2 _affine_window_size = ImVec2(606, 336);
 
     /* Autokey */
@@ -150,6 +150,12 @@ private:
 
     /* Key */
     std::string _key = "";
+
+    /* Key a */
+    std::string _key_a = "3";
+
+    /* Key b */
+    std::string _key_b = "5";
 
     /* Source text */
     std::string _source_text = "";

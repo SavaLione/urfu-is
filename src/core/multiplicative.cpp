@@ -41,7 +41,7 @@ void multiplicative::set_key(std::string key)
         // spdlog::error(e.what());
     }
 
-    ret = ret % _alphabet.size();
+    // ret = ret % _alphabet.size();
     _key = ret;
 }
 
