@@ -404,17 +404,15 @@ void gui::additive_cipher()
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
             ad.set_alphabet(_alphabet);
-            ad.set_source_text(_additive_source_text);
+            ad.set_source_text(_source_text);
             ad.set_key(_key);
-
             ad.encrypt();
-
-            _additive_cipher_text = ad.get_cipher_text();
+            _cipher_text = ad.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -426,17 +424,15 @@ void gui::additive_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
             ad.set_alphabet(_alphabet);
-            ad.set_cipher_text(_additive_cipher_text);
+            ad.set_cipher_text(_cipher_text);
             ad.set_key(_key);
-
             ad.decrypt();
-
-            _additive_source_text = ad.get_source_text();
+            _source_text = ad.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -483,17 +479,16 @@ void gui::multiplicative_cipher()
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
             mp.set_alphabet(_alphabet);
-            mp.set_source_text(_additive_source_text);
+            mp.set_source_text(_source_text);
             mp.set_key(_key);
-
             mp.encrypt();
 
-            _additive_cipher_text = mp.get_cipher_text();
+            _cipher_text = mp.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -505,17 +500,16 @@ void gui::multiplicative_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
             mp.set_alphabet(_alphabet);
-            mp.set_cipher_text(_additive_cipher_text);
+            mp.set_cipher_text(_cipher_text);
             mp.set_key(_key);
-
             mp.decrypt();
 
-            _additive_source_text = mp.get_source_text();
+            _source_text = mp.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -525,9 +519,10 @@ void gui::multiplicative_cipher()
 
         ImGui::SetWindowSize(_additive_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Multiplicative cipher
     }
 }
+
 void gui::affine_cipher()
 {
     if (_show_affine_cipher)
@@ -563,7 +558,7 @@ void gui::affine_cipher()
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         try
         {
@@ -580,14 +575,12 @@ void gui::affine_cipher()
         if (ImGui::Button("Encrypt"))
         {
             af.set_alphabet(_alphabet);
-            af.set_source_text(_additive_source_text);
-
+            af.set_source_text(_source_text);
             af.set_key_a(_affine_key_1);
             af.set_key_b(_affine_key_2);
-
             af.encrypt();
 
-            _additive_cipher_text = af.get_cipher_text();
+            _cipher_text = af.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -599,19 +592,17 @@ void gui::affine_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
             af.set_alphabet(_alphabet);
-            af.set_cipher_text(_additive_cipher_text);
-
+            af.set_cipher_text(_cipher_text);
             af.set_key_a(_affine_key_1);
             af.set_key_b(_affine_key_2);
-
             af.decrypt();
 
-            _additive_source_text = af.get_source_text();
+            _source_text = af.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -621,7 +612,7 @@ void gui::affine_cipher()
 
         ImGui::SetWindowSize(_affine_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Affine cipher
     }
 }
 
@@ -653,18 +644,16 @@ void gui::autokey_cipher()
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_source_text);
 
         if (ImGui::Button("Encrypt"))
         {
             ak.set_alphabet(_alphabet);
-            ak.set_source_text(_additive_source_text);
-
+            ak.set_source_text(_source_text);
             ak.set_key(_autokey_key);
-
             ak.encrypt();
 
-            _additive_cipher_text = ak.get_cipher_text();
+            _cipher_text = ak.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
@@ -676,17 +665,16 @@ void gui::autokey_cipher()
         ImGui::Text("Decrypt");
         ImGui::Separator();
 
-        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_cipher_text);
 
         if (ImGui::Button("Decrypt"))
         {
             ak.set_alphabet(_alphabet);
-            ak.set_cipher_text(_additive_cipher_text);
+            ak.set_cipher_text(_cipher_text);
             ak.set_key(_autokey_key); //
-
             ak.decrypt();
 
-            _additive_source_text = ak.get_source_text();
+            _source_text = ak.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
@@ -696,7 +684,7 @@ void gui::autokey_cipher()
 
         ImGui::SetWindowSize(_additive_window_size);
 
-        ImGui::End(); // Additive cipher
+        ImGui::End(); // Autokey cipher
     }
 }
 

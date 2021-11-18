@@ -18,6 +18,6 @@ int main()
     mp.decrypt();
     std::cout << mp.get_source_text() << std::endl;
     std::cout << mp.get_cipher_text() << std::endl;
-
+    
     return 0;
 }
