@@ -104,7 +104,7 @@ private:
 
     /* Additive */
     additive ad;
-    std::string _additive_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+    // std::string _additive_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
     std::string _additive_source_text = "The quick brown fox jumps over the lazy dog";
     std::string _additive_cipher_text = "";
     std::string _additive_str_key = "0";
@@ -144,6 +144,10 @@ private:
     std::string _transposition_key = "";
     std::string _transposition_source_text = "";
     std::string _transposition_cipher_text = "";
+
+    /* other */
+    void _choose_alphabet();
+    std::string _alphabet = "abcdefghijklmnopqrstuvwxyz";
 };
 
 #endif // CORE_GUI_H

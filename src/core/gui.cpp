@@ -388,50 +388,11 @@ void gui::additive_cipher()
 
         ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
 
-
         ImGui::SetNextWindowPos(pos);
 
         ImGui::Begin("Additive cipher", &_show_additive_cipher, window_flags);
 
-        ImGui::Text("Alphabet");
-        ImGui::Separator();
-        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
-
-        ImGui::Text("Reset alphabet:");
-        ImGui::SameLine();
-
-        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
-
-        std::string str_original =  "Original";
-        std::string str_eng_small = "Small   ";
-        std::string str_eng_big =   "Big     ";
-        std::string str_eng_all =   "All     ";
-
-        if(ImGui::Button(str_original.c_str()))
-        {
-            _additive_alphabet = str_original_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_small.c_str()))
-        {
-            _additive_alphabet = str_eng_small_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_big.c_str()))
-        {
-            _additive_alphabet = str_eng_big_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_all.c_str()))
-        {
-            _additive_alphabet = str_eng_all_alphabet;
-        }
+        _choose_alphabet();
 
         ImGui::InputTextWithHint("Key", "enter key", &_additive_str_key);
 
@@ -459,7 +420,7 @@ void gui::additive_cipher()
 
         if(ImGui::Button("Encrypt"))
         {
-            ad.set_alphabet(_additive_alphabet);
+            ad.set_alphabet(_alphabet);
             ad.set_source_text(_additive_source_text);
 
             ad.set_key(_additive_key);
@@ -482,6 +443,7 @@ void gui::additive_cipher()
 
         if(ImGui::Button("Decrypt"))
         {
+            ad.set_alphabet(_alphabet);
             ad.set_cipher_text(_additive_cipher_text);
             ad.set_key(_additive_key);
 
@@ -518,45 +480,7 @@ void gui::multiplicative_cipher()
 
         ImGui::Begin("Multiplicative cipher", &_show_multiplicative_cipher, window_flags);
 
-        ImGui::Text("Alphabet");
-        ImGui::Separator();
-        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
-
-        ImGui::Text("Reset alphabet:");
-        ImGui::SameLine();
-
-        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
-
-        std::string str_original =  "Original";
-        std::string str_eng_small = "Small   ";
-        std::string str_eng_big =   "Big     ";
-        std::string str_eng_all =   "All     ";
-
-        if(ImGui::Button(str_original.c_str()))
-        {
-            _additive_alphabet = str_original_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_small.c_str()))
-        {
-            _additive_alphabet = str_eng_small_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_big.c_str()))
-        {
-            _additive_alphabet = str_eng_big_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_all.c_str()))
-        {
-            _additive_alphabet = str_eng_all_alphabet;
-        }
+        _choose_alphabet();
 
         ImGui::InputTextWithHint("Key", "enter key", &_additive_str_key);
 
@@ -588,7 +512,7 @@ void gui::multiplicative_cipher()
 
         if(ImGui::Button("Encrypt"))
         {
-            mp.set_alphabet(_additive_alphabet);
+            mp.set_alphabet(_alphabet);
             mp.set_source_text(_additive_source_text);
 
             mp.set_key(_additive_key);
@@ -611,6 +535,7 @@ void gui::multiplicative_cipher()
 
         if(ImGui::Button("Decrypt"))
         {
+            mp.set_alphabet(_alphabet);
             mp.set_cipher_text(_additive_cipher_text);
             mp.set_key(_additive_key);
 
@@ -644,51 +569,7 @@ void gui::affine_cipher()
 
         ImGui::Begin("Affine cipher", &_show_affine_cipher, window_flags);
 
-        // if (true)
-        // {
-        //     ImVec2 size = ImGui::GetWindowSize();
-        //     spdlog::info("size x={} y={}", size.x, size.y);
-        // }
-
-        ImGui::Text("Alphabet");
-        ImGui::Separator();
-        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
-
-        ImGui::Text("Reset alphabet:");
-        ImGui::SameLine();
-
-        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
-
-        std::string str_original =  "Original";
-        std::string str_eng_small = "Small   ";
-        std::string str_eng_big =   "Big     ";
-        std::string str_eng_all =   "All     ";
-
-        if(ImGui::Button(str_original.c_str()))
-        {
-            _additive_alphabet = str_original_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_small.c_str()))
-        {
-            _additive_alphabet = str_eng_small_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_big.c_str()))
-        {
-            _additive_alphabet = str_eng_big_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_all.c_str()))
-        {
-            _additive_alphabet = str_eng_all_alphabet;
-        }
+        _choose_alphabet();
 
         ImGui::InputTextWithHint("Key 1", "enter key 1", &_affine_str_key_1);
         ImGui::InputTextWithHint("Key 2", "enter key 2", &_affine_str_key_2);
@@ -724,7 +605,7 @@ void gui::affine_cipher()
 
         if(ImGui::Button("Encrypt"))
         {
-            af.set_alphabet(_additive_alphabet);
+            af.set_alphabet(_alphabet);
             af.set_source_text(_additive_source_text);
 
             af.set_key_a(_affine_key_1);
@@ -748,6 +629,7 @@ void gui::affine_cipher()
 
         if(ImGui::Button("Decrypt"))
         {
+            af.set_alphabet(_alphabet);
             af.set_cipher_text(_additive_cipher_text);
 
             af.set_key_a(_affine_key_1);
@@ -786,45 +668,7 @@ void gui::autokey_cipher()
 
         ImGui::Begin("Autokey cipher", &_show_autokey_cipher, window_flags);
 
-        ImGui::Text("Alphabet");
-        ImGui::Separator();
-        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
-
-        ImGui::Text("Reset alphabet:");
-        ImGui::SameLine();
-
-        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
-
-        std::string str_original =  "Original";
-        std::string str_eng_small = "Small   ";
-        std::string str_eng_big =   "Big     ";
-        std::string str_eng_all =   "All     ";
-
-        if(ImGui::Button(str_original.c_str()))
-        {
-            _additive_alphabet = str_original_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_small.c_str()))
-        {
-            _additive_alphabet = str_eng_small_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_big.c_str()))
-        {
-            _additive_alphabet = str_eng_big_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_all.c_str()))
-        {
-            _additive_alphabet = str_eng_all_alphabet;
-        }
+        _choose_alphabet();
 
         ImGui::InputTextWithHint("Key", "enter key", &_autokey_key);
 
@@ -841,7 +685,7 @@ void gui::autokey_cipher()
 
         if(ImGui::Button("Encrypt"))
         {
-            ak.set_alphabet(_additive_alphabet);
+            ak.set_alphabet(_alphabet);
             ak.set_source_text(_additive_source_text);
 
             ak.set_key(_autokey_key);
@@ -864,6 +708,7 @@ void gui::autokey_cipher()
 
         if(ImGui::Button("Decrypt"))
         {
+            ak.set_alphabet(_alphabet);
             ak.set_cipher_text(_additive_cipher_text);
             ak.set_key(_autokey_key); //
 
@@ -970,45 +815,7 @@ void gui::vigenere_cipher()
 
         ImGui::Begin("Vigenere cipher", &_show_vigenere_cipher, window_flags);
 
-        ImGui::Text("Alphabet");
-        ImGui::Separator();
-        ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_additive_alphabet);
-
-        ImGui::Text("Reset alphabet:");
-        ImGui::SameLine();
-
-        std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
-
-        std::string str_original =  "Original";
-        std::string str_eng_small = "Small   ";
-        std::string str_eng_big =   "Big     ";
-        std::string str_eng_all =   "All     ";
-
-        if(ImGui::Button(str_original.c_str()))
-        {
-            _additive_alphabet = str_original_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_small.c_str()))
-        {
-            _additive_alphabet = str_eng_small_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_big.c_str()))
-        {
-            _additive_alphabet = str_eng_big_alphabet;
-        }
-        ImGui::SameLine();
-
-        if(ImGui::Button(str_eng_all.c_str()))
-        {
-            _additive_alphabet = str_eng_all_alphabet;
-        }
+        _choose_alphabet();
 
         ImGui::InputTextWithHint("Key", "enter key", &_vigenere_key);
 
@@ -1024,7 +831,7 @@ void gui::vigenere_cipher()
 
         if(ImGui::Button("Encrypt"))
         {
-            vr.set_alphabet(_additive_alphabet);
+            vr.set_alphabet(_alphabet);
             vr.set_source_text(_vigenere_source_text);
             vr.set_key(_vigenere_key);
             vr.encrypt();
@@ -1044,6 +851,7 @@ void gui::vigenere_cipher()
 
         if(ImGui::Button("Decrypt"))
         {
+            vr.set_alphabet(_alphabet);
             vr.set_cipher_text(_vigenere_cipher_text);
             vr.set_key(_vigenere_key);
             vr.decrypt();
@@ -1084,7 +892,7 @@ void gui::transposition_cipher()
 
         ImGui::SetNextWindowPos(pos);
 
-        ImGui::Begin("Playfair cipher", &_show_transposition_cipher, window_flags);
+        ImGui::Begin("Transposition cipher", &_show_transposition_cipher, window_flags);
 
         ImGui::InputTextWithHint("Key", "enter key", &_transposition_key);
 
@@ -1136,5 +944,48 @@ void gui::transposition_cipher()
         ImGui::SetWindowSize(_additive_window_size);
 
         ImGui::End(); // Additive cipher
+    }
+}
+
+void gui::_choose_alphabet()
+{
+    ImGui::Text("Alphabet");
+    ImGui::Separator();
+    ImGui::InputTextWithHint("Alphabet", "enter alphabet here", &_alphabet);
+
+    ImGui::Text("Reset alphabet:");
+    ImGui::SameLine();
+
+    std::string str_original_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+    std::string str_eng_small_alphabet = "abcdefghijklmnopqrstuvwxyz";
+    std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
+
+    std::string str_original =  "Original";
+    std::string str_eng_small = "Small   ";
+    std::string str_eng_big =   "Big     ";
+    std::string str_eng_all =   "All     ";
+
+    if(ImGui::Button(str_original.c_str()))
+    {
+        _alphabet = str_original_alphabet;
+    }
+    ImGui::SameLine();
+
+    if(ImGui::Button(str_eng_small.c_str()))
+    {
+        _alphabet = str_eng_small_alphabet;
+    }
+    ImGui::SameLine();
+
+    if(ImGui::Button(str_eng_big.c_str()))
+    {
+        _alphabet = str_eng_big_alphabet;
+    }
+    ImGui::SameLine();
+
+    if(ImGui::Button(str_eng_all.c_str()))
+    {
+        _alphabet = str_eng_all_alphabet;
     }
 }
