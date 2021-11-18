@@ -11,7 +11,7 @@ static void glfw_error_callback(int error, const char *description)
     spdlog::error("Glfw Error {}: {}", error, description);
 }
 
-void gui::_help_marker(const char* desc)
+void gui::_help_marker(const char *desc)
 {
     ImGui::TextDisabled("(?)");
     if (ImGui::IsItemHovered())
@@ -229,20 +229,20 @@ void gui::_window_main()
     ImGui::Text("Ciphers");
     ImGui::Separator();
 
-    std::string str_additive        = "(1) Additive      ";
-    std::string str_multiplicative  = "(2) Multiplicative";
-    std::string str_affine          = "(3) Affine        ";
-    std::string str_autokey         = "(4) Autokey       ";
-    std::string str_playfair        = "(5) Playfair      ";
-    std::string str_vigenere        = "(6) Vigenere      ";
-    std::string str_hill            = "(7) Hill          ";
-    std::string str_transposition   = "(8) Transposition ";
-    std::string str_about           = "About                ";
+    std::string str_additive = "(1) Additive      ";
+    std::string str_multiplicative = "(2) Multiplicative";
+    std::string str_affine = "(3) Affine        ";
+    std::string str_autokey = "(4) Autokey       ";
+    std::string str_playfair = "(5) Playfair      ";
+    std::string str_vigenere = "(6) Vigenere      ";
+    std::string str_hill = "(7) Hill          ";
+    std::string str_transposition = "(8) Transposition ";
+    std::string str_about = "About                ";
 
     std::string str_spaces = "   ";
     std::string str_choice = "-> ";
 
-    if(_show_additive_cipher)
+    if (_show_additive_cipher)
     {
         str_additive.insert(0, str_choice);
     }
@@ -251,7 +251,7 @@ void gui::_window_main()
         str_additive.insert(0, str_spaces);
     }
 
-    if(_show_multiplicative_cipher)
+    if (_show_multiplicative_cipher)
     {
         str_multiplicative.insert(0, str_choice);
     }
@@ -260,7 +260,7 @@ void gui::_window_main()
         str_multiplicative.insert(0, str_spaces);
     }
 
-    if(_show_affine_cipher)
+    if (_show_affine_cipher)
     {
         str_affine.insert(0, str_choice);
     }
@@ -269,7 +269,7 @@ void gui::_window_main()
         str_affine.insert(0, str_spaces);
     }
 
-    if(_show_autokey_cipher)
+    if (_show_autokey_cipher)
     {
         str_autokey.insert(0, str_choice);
     }
@@ -278,7 +278,7 @@ void gui::_window_main()
         str_autokey.insert(0, str_spaces);
     }
 
-    if(_show_playfair_cipher)
+    if (_show_playfair_cipher)
     {
         str_playfair.insert(0, str_choice);
     }
@@ -287,7 +287,7 @@ void gui::_window_main()
         str_playfair.insert(0, str_spaces);
     }
 
-    if(_show_vigenere_cipher)
+    if (_show_vigenere_cipher)
     {
         str_vigenere.insert(0, str_choice);
     }
@@ -296,7 +296,7 @@ void gui::_window_main()
         str_vigenere.insert(0, str_spaces);
     }
 
-    if(_show_hill_cipher)
+    if (_show_hill_cipher)
     {
         str_hill.insert(0, str_choice);
     }
@@ -305,7 +305,7 @@ void gui::_window_main()
         str_hill.insert(0, str_spaces);
     }
 
-    if(_show_transposition_cipher)
+    if (_show_transposition_cipher)
     {
         str_transposition.insert(0, str_choice);
     }
@@ -378,7 +378,7 @@ void gui::_close_all_cipher_windows()
 
 void gui::additive_cipher()
 {
-    if(_show_additive_cipher)
+    if (_show_additive_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -386,7 +386,7 @@ void gui::additive_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -394,36 +394,23 @@ void gui::additive_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key", "enter key", &_additive_str_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += std::to_string(_additive_key);
+        _s_key += ad.get_key();
         ImGui::Text(_s_key.c_str());
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-
-
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
 
-        try
-        {
-            _additive_key = std::stoi(_additive_str_key);
-        }
-        catch(const std::exception& e)
-        {
-            _additive_key = 0;
-            spdlog::error(e.what());
-        }
-
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             ad.set_alphabet(_alphabet);
             ad.set_source_text(_additive_source_text);
-
-            ad.set_key(_additive_key);
+            ad.set_key(_key);
 
             ad.encrypt();
 
@@ -441,11 +428,11 @@ void gui::additive_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             ad.set_alphabet(_alphabet);
             ad.set_cipher_text(_additive_cipher_text);
-            ad.set_key(_additive_key);
+            ad.set_key(_key);
 
             ad.decrypt();
 
@@ -465,7 +452,7 @@ void gui::additive_cipher()
 
 void gui::multiplicative_cipher()
 {
-    if(_show_multiplicative_cipher)
+    if (_show_multiplicative_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -473,8 +460,7 @@ void gui::multiplicative_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
-
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -482,40 +468,28 @@ void gui::multiplicative_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key", "enter key", &_additive_str_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += std::to_string(_additive_key);
+        _s_key += mp.get_key();
+
         ImGui::Text(_s_key.c_str());
         ImGui::SameLine();
         _help_marker(
-                "The number should be able to take the inverse modulus.\n"
-                "Example numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 , 97, 101, 103, 107, 109, 113, 127...\n");
+            "The number should be able to take the inverse modulus.\n"
+            "Example numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 , 97, 101, 103, 107, 109, 113, 127...\n");
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-
-
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
 
-        try
-        {
-            _additive_key = std::stoi(_additive_str_key);
-        }
-        catch(const std::exception& e)
-        {
-            _additive_key = 0;
-            spdlog::error(e.what());
-        }
-
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             mp.set_alphabet(_alphabet);
             mp.set_source_text(_additive_source_text);
-
-            mp.set_key(_additive_key);
+            mp.set_key(_key);
 
             mp.encrypt();
 
@@ -533,11 +507,11 @@ void gui::multiplicative_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             mp.set_alphabet(_alphabet);
             mp.set_cipher_text(_additive_cipher_text);
-            mp.set_key(_additive_key);
+            mp.set_key(_key);
 
             mp.decrypt();
 
@@ -556,7 +530,7 @@ void gui::multiplicative_cipher()
 }
 void gui::affine_cipher()
 {
-    if(_show_affine_cipher)
+    if (_show_affine_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -564,7 +538,7 @@ void gui::affine_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
         ImGui::SetNextWindowPos(pos);
 
         ImGui::Begin("Affine cipher", &_show_affine_cipher, window_flags);
@@ -582,8 +556,8 @@ void gui::affine_cipher()
         ImGui::Text(_s_key.c_str());
         ImGui::SameLine();
         _help_marker(
-                "The number should be able to take the inverse modulus.\n"
-                "Example numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 , 97, 101, 103, 107, 109, 113, 127...\n");
+            "The number should be able to take the inverse modulus.\n"
+            "Example numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89 , 97, 101, 103, 107, 109, 113, 127...\n");
 
         ImGui::Spacing();
         ImGui::Text("Encrypt");
@@ -596,14 +570,14 @@ void gui::affine_cipher()
             _affine_key_1 = std::stoi(_affine_str_key_1);
             _affine_key_2 = std::stoi(_affine_str_key_2);
         }
-        catch(const std::exception& e)
+        catch (const std::exception &e)
         {
             _affine_key_1 = 3;
             _affine_key_2 = 5;
             spdlog::error(e.what());
         }
 
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             af.set_alphabet(_alphabet);
             af.set_source_text(_additive_source_text);
@@ -627,7 +601,7 @@ void gui::affine_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             af.set_alphabet(_alphabet);
             af.set_cipher_text(_additive_cipher_text);
@@ -653,7 +627,7 @@ void gui::affine_cipher()
 
 void gui::autokey_cipher()
 {
-    if(_show_autokey_cipher)
+    if (_show_autokey_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -661,8 +635,7 @@ void gui::autokey_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
-
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -680,10 +653,9 @@ void gui::autokey_cipher()
         ImGui::Text("Encrypt");
         ImGui::Separator();
 
-
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_additive_source_text);
 
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             ak.set_alphabet(_alphabet);
             ak.set_source_text(_additive_source_text);
@@ -706,7 +678,7 @@ void gui::autokey_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_additive_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             ak.set_alphabet(_alphabet);
             ak.set_cipher_text(_additive_cipher_text);
@@ -730,7 +702,7 @@ void gui::autokey_cipher()
 
 void gui::playfair_cipher()
 {
-    if(_show_playfair_cipher)
+    if (_show_playfair_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -738,8 +710,7 @@ void gui::playfair_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
-
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -757,7 +728,7 @@ void gui::playfair_cipher()
 
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_playfair_source_text);
 
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             pf.set_source_text(_playfair_source_text);
             pf.set_key(_playfair_key);
@@ -777,7 +748,7 @@ void gui::playfair_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_playfair_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             pf.set_cipher_text(_playfair_cipher_text);
             pf.set_key(_playfair_key);
@@ -800,7 +771,7 @@ void gui::playfair_cipher()
 
 void gui::vigenere_cipher()
 {
-    if(_show_vigenere_cipher)
+    if (_show_vigenere_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -808,8 +779,7 @@ void gui::vigenere_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
-
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -829,7 +799,7 @@ void gui::vigenere_cipher()
 
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_vigenere_source_text);
 
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             vr.set_alphabet(_alphabet);
             vr.set_source_text(_vigenere_source_text);
@@ -849,7 +819,7 @@ void gui::vigenere_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_vigenere_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             vr.set_alphabet(_alphabet);
             vr.set_cipher_text(_vigenere_cipher_text);
@@ -871,15 +841,14 @@ void gui::vigenere_cipher()
 
 void gui::hill_cipher()
 {
-    if(_show_hill_cipher)
+    if (_show_hill_cipher)
     {
-
     }
 }
 
 void gui::transposition_cipher()
 {
-    if(_show_transposition_cipher)
+    if (_show_transposition_cipher)
     {
         ImGuiWindowFlags window_flags = 0;
         window_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -887,8 +856,7 @@ void gui::transposition_cipher()
         window_flags |= ImGuiWindowFlags_NoResize;
         window_flags |= ImGuiWindowFlags_NoCollapse;
 
-        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
-
+        ImVec2 pos = ImVec2(4 + _main_window_size.x, 0);
 
         ImGui::SetNextWindowPos(pos);
 
@@ -906,7 +874,7 @@ void gui::transposition_cipher()
 
         ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_transposition_source_text);
 
-        if(ImGui::Button("Encrypt"))
+        if (ImGui::Button("Encrypt"))
         {
             tp.set_key(_transposition_key);
             tp.set_source_text(_transposition_source_text);
@@ -926,7 +894,7 @@ void gui::transposition_cipher()
 
         ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_transposition_cipher_text);
 
-        if(ImGui::Button("Decrypt"))
+        if (ImGui::Button("Decrypt"))
         {
             tp.set_key(_transposition_key);
             tp.set_cipher_text(_transposition_cipher_text);
@@ -961,30 +929,30 @@ void gui::_choose_alphabet()
     std::string str_eng_big_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     std::string str_eng_all_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 .!@#$%^&*()_-+=\'\\|/";
 
-    std::string str_original =  "Original";
+    std::string str_original = "Original";
     std::string str_eng_small = "Small   ";
-    std::string str_eng_big =   "Big     ";
-    std::string str_eng_all =   "All     ";
+    std::string str_eng_big = "Big     ";
+    std::string str_eng_all = "All     ";
 
-    if(ImGui::Button(str_original.c_str()))
+    if (ImGui::Button(str_original.c_str()))
     {
         _alphabet = str_original_alphabet;
     }
     ImGui::SameLine();
 
-    if(ImGui::Button(str_eng_small.c_str()))
+    if (ImGui::Button(str_eng_small.c_str()))
     {
         _alphabet = str_eng_small_alphabet;
     }
     ImGui::SameLine();
 
-    if(ImGui::Button(str_eng_big.c_str()))
+    if (ImGui::Button(str_eng_big.c_str()))
     {
         _alphabet = str_eng_big_alphabet;
     }
     ImGui::SameLine();
 
-    if(ImGui::Button(str_eng_all.c_str()))
+    if (ImGui::Button(str_eng_all.c_str()))
     {
         _alphabet = str_eng_all_alphabet;
     }

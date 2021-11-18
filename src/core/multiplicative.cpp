@@ -23,14 +23,31 @@ std::string multiplicative::get_alphabet()
     return _alphabet;
 }
 
-void multiplicative::set_key(int key)
+void multiplicative::set_key(std::string key)
 {
-    _key = key;
+    int ret = 0;
+    if (key == "")
+    {
+        return;
+    }
+
+    try
+    {
+        ret = std::stoi(key);
+    }
+    catch (const std::exception &e)
+    {
+        ret = 0;
+        // spdlog::error(e.what());
+    }
+
+    ret = ret % _alphabet.size();
+    _key = ret;
 }
 
-int multiplicative::get_key()
+std::string multiplicative::get_key()
 {
-    return _key;
+    return std::to_string(_key);
 }
 
 void multiplicative::set_alphabet(std::string alphabet)
@@ -69,47 +86,7 @@ void multiplicative::decrypt()
     std::string decrypt_text;
     int power = get_power();
 
-    // modular inverse
-    /*
-        Шаг первый:
-        Находим инверсию ключу
-    */
-
-    // bool fl = true;
-    // int inverse = -1;
-    // for (int i = 0; (i < power) && (fl); i++)
-    // {
-    //     if (((_key * i) % power) == 1)
-    //     {
-    //         inverse = i;
-    //         fl = false;
-    //     }
-    // }
-
     int inverse = _modular_inverse(_key, get_power());
-
-    /*
-        Либо так:
-        inv[1] = 1;
-            for(int i = 2; i < m; ++i)
-            {
-                inv[i] = m - (m/i) * inv[m%i] % m;
-            }
-        
-        inv[i] = -[m/i] * inv[m mod i] mod m
-
-        Доказательство:
-        1. m mod i = m - [m/i] * i
-        2. m mod i ≡ - [m/i] * i mod m
-        3. (m mod i) * i ^ (-1) * (m mod i) ^ (-1) ≡ - [m/i] * i * i ^ (-1) mod m
-        4. i ^ (-1) ≡ - [m/i] * (m mod i) ^ (-1) mod m
-    */
-
-    // decrypt
-    /*
-        Шаг второй:
-        Находим расшифрованный текст по инверсии ключа
-    */
 
     for (int i = 0; i < _cipher_text.size(); i++)
     {
@@ -123,29 +100,6 @@ int multiplicative::_find(char character)
 {
     int found = _alphabet.find(character);
     return found;
-}
-
-std::string multiplicative::print()
-{
-    std::string ret;
-
-    ret += "alphabet: [";
-    ret += _alphabet;
-    ret += "]\n";
-
-    ret += "power: ";
-    ret += std::to_string(get_power());
-    ret += "\n";
-
-    ret += "source text: ";
-    ret += _source_text;
-    ret += "\n";
-
-    ret += "cipher text: ";
-    ret += _cipher_text;
-    ret += "\n\n";
-
-    return ret;
 }
 
 int multiplicative::_modular_inverse(int a, int m)

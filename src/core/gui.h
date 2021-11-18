@@ -107,7 +107,7 @@ private:
     // std::string _additive_alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
     std::string _additive_source_text = "The quick brown fox jumps over the lazy dog";
     std::string _additive_cipher_text = "";
-    std::string _additive_str_key = "0";
+    // std::string _additive_str_key = "0";
     int _additive_key = 0;
     ImVec2 _additive_window_size = ImVec2(606, 315);
 
@@ -146,8 +146,15 @@ private:
     std::string _transposition_cipher_text = "";
 
     /* other */
+
+    /* Choose alphabet */
     void _choose_alphabet();
+
+    /* Alphabet */
     std::string _alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    /* Key */
+    std::string _key = "";
 };
 
 #endif // CORE_GUI_H

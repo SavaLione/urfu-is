@@ -25,14 +25,31 @@ std::string additive::get_alphabet()
     return _alphabet;
 }
 
-void additive::set_key(int key)
+void additive::set_key(std::string key)
 {
-    _key = key % _alphabet.size();
+    int ret = 0;
+    if (key == "")
+    {
+        return;
+    }
+
+    try
+    {
+        ret = std::stoi(key);
+    }
+    catch (const std::exception &e)
+    {
+        ret = 0;
+        // spdlog::error(e.what());
+    }
+
+    ret = ret % _alphabet.size();
+    _key = ret;
 }
 
-int additive::get_key()
+std::string additive::get_key()
 {
-    return _key;
+    return std::to_string(_key);
 }
 
 void additive::set_alphabet(std::string alphabet)
@@ -70,7 +87,6 @@ void additive::encrypt()
         {
             cipher_text += _alphabet[z + _key];
         }
-        
     }
     _cipher_text = cipher_text;
 }
