@@ -27,6 +27,7 @@ public:
     ~gui();
 
 private:
+    /* ImGui text widget (?) helper */
     static void _help_marker(const char* desc);
 
     /* Setup window */
@@ -35,8 +36,10 @@ private:
     /* Window create state */
     bool _is_window_create = false;
 
-    /* Set GLSL version */
+    /* GLSL version */
     const char *glsl_version = "#version 130";
+
+    /* Set GLSL version */
     void _set_glsl_version();
 
     /* Window */
@@ -115,28 +118,15 @@ private:
 
     /* Autokey */
     autokey ak;
-    std::string _autokey_key;
 
     /* Playfair */
     playfair pf;
-    // std::string _playfair_key = "";
-    // std::string _playfair_source_text = "";
-    // std::string _playfair_cipher_text = "";
 
     /* Vigenere */
     vigenere vr;
-    //std::string _vigenere_alphabet = "";
-    // std::string _vigenere_key = "";
-    // std::string _vigenere_source_text = "";
-    // std::string _vigenere_cipher_text = "";
 
     /* Transposition */
     transposition tp;
-    // std::string _transposition_key = "";
-    // std::string _transposition_source_text = "";
-    // std::string _transposition_cipher_text = "";
-
-    /* other */
 
     /* Choose alphabet */
     void _choose_alphabet();

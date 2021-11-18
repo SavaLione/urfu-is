@@ -622,10 +622,10 @@ void gui::autokey_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key", "enter key", &_autokey_key);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
         std::string _s_key = "Key: ";
-        _s_key += _autokey_key;
+        _s_key += _key;
         ImGui::Text(_s_key.c_str());
 
         ImGui::Spacing();
@@ -638,7 +638,7 @@ void gui::autokey_cipher()
         {
             ak.set_alphabet(_alphabet);
             ak.set_source_text(_source_text);
-            ak.set_key(_autokey_key);
+            ak.set_key(_key);
             ak.encrypt();
 
             _cipher_text = ak.get_cipher_text();
@@ -659,7 +659,7 @@ void gui::autokey_cipher()
         {
             ak.set_alphabet(_alphabet);
             ak.set_cipher_text(_cipher_text);
-            ak.set_key(_autokey_key); //
+            ak.set_key(_key); //
             ak.decrypt();
 
             _source_text = ak.get_source_text();
