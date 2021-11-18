@@ -16,6 +16,7 @@
 #include "core/affine.h"
 #include "core/autokey.h"
 #include "core/playfair.h"
+#include "core/vigenere.h"
 
 class gui
 {
@@ -128,6 +129,13 @@ private:
     std::string _playfair_key = "";
     std::string _playfair_source_text = "";
     std::string _playfair_cipher_text = "";
+
+    /* Vigenere */
+    vigenere vr;
+    //std::string _vigenere_alphabet = "";
+    std::string _vigenere_key = "";
+    std::string _vigenere_source_text = "";
+    std::string _vigenere_cipher_text = "";
 };
 
 #endif // CORE_GUI_H
