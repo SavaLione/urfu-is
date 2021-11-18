@@ -15,6 +15,7 @@
 #include "core/multiplicative.h"
 #include "core/affine.h"
 #include "core/autokey.h"
+#include "core/playfair.h"
 
 class gui
 {
@@ -122,6 +123,11 @@ private:
     autokey ak;
     std::string _autokey_key;
 
+    /* Playfair */
+    playfair pf;
+    std::string _playfair_key = "";
+    std::string _playfair_source_text = "";
+    std::string _playfair_cipher_text = "";
 };
 
 #endif // CORE_GUI_H

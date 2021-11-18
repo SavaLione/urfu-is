@@ -865,7 +865,7 @@ void gui::autokey_cipher()
         if(ImGui::Button("Decrypt"))
         {
             ak.set_cipher_text(_additive_cipher_text);
-            // ak.set_key(_autokey_key);
+            ak.set_key(_autokey_key); //
 
             ak.decrypt();
 
@@ -887,7 +887,69 @@ void gui::playfair_cipher()
 {
     if(_show_playfair_cipher)
     {
+        ImGuiWindowFlags window_flags = 0;
+        window_flags |= ImGuiWindowFlags_NoScrollbar;
+        window_flags |= ImGuiWindowFlags_NoMove;
+        window_flags |= ImGuiWindowFlags_NoResize;
+        window_flags |= ImGuiWindowFlags_NoCollapse;
 
+        ImVec2 pos = ImVec2(4 + _main_window_size.x,0);
+
+
+        ImGui::SetNextWindowPos(pos);
+
+        ImGui::Begin("Playfair cipher", &_show_playfair_cipher, window_flags);
+
+        ImGui::InputTextWithHint("Key", "enter key", &_playfair_key);
+
+        std::string _s_key = "Key: ";
+        _s_key += _playfair_key;
+        ImGui::Text(_s_key.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Encrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to encrypt", "enter text to encrypt here", &_playfair_source_text);
+
+        if(ImGui::Button("Encrypt"))
+        {
+            pf.set_source_text(_playfair_source_text);
+            pf.set_key(_playfair_key);
+            pf.encrypt();
+
+            _playfair_cipher_text = pf.get_cipher_text();
+        }
+
+        std::string str_cipher_text = "Cipher text: ";
+        str_cipher_text += pf.get_cipher_text();
+
+        ImGui::Text(str_cipher_text.c_str());
+
+        ImGui::Spacing();
+        ImGui::Text("Decrypt");
+        ImGui::Separator();
+
+        ImGui::InputTextWithHint("Text to decrypt", "enter text to decrypt here", &_playfair_cipher_text);
+
+        if(ImGui::Button("Decrypt"))
+        {
+            pf.set_cipher_text(_playfair_cipher_text);
+            pf.set_key(_playfair_key);
+
+            pf.decrypt();
+
+            _playfair_source_text = pf.get_source_text();
+        }
+
+        std::string str_source_text = "Source text: ";
+        str_source_text += pf.get_source_text();
+
+        ImGui::Text(str_source_text.c_str());
+
+        ImGui::SetWindowSize(_additive_window_size);
+
+        ImGui::End(); // Additive cipher
     }
 }
 
