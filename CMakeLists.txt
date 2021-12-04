@@ -49,7 +49,6 @@ isl_create_project(ISL_PLAYFAIR_PROJECT       "5_playfair"       "0.0.1")   # Ш
 isl_create_project(ISL_VIGENERE_PROJECT       "6_vigenere"       "0.0.1")   # Шифр Виженера
 isl_create_project(ISL_HILL_PROJECT           "7_hill"           "0.0.1")   # Шифр Хилла
 isl_create_project(ISL_TRANSPOSITION_PROJECT  "8_transposition"  "0.0.1")   # Шифр перестановки
-isl_create_project(ISL_GTEST_PROJECT          "9_test"           "0.0.1")   # googletest
 
 
 #################################################################################
@@ -77,11 +76,6 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/lib/imgui)
 # spdlog
 set(SPDLOG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/spdlog/include" CACHE PATH "spdlog lib include")
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/spdlog)
-
-# googletest
-set(GOOGLETEST_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/googletest/googletest/include" CACHE PATH "googletest lib include")
-add_subdirectory(${PROJECT_SOURCE_DIR}/lib/googletest)
-enable_testing()
 
 #################################################################################
 #                                     Sources                                   #
@@ -223,6 +217,12 @@ target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${SPDLOG_INCLUDE_DIR})
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
+isl_out(glfw)                           # Библиотека glfw
+isl_out(imgui)                          # Библиотека imgui
+isl_out(imgui_glfw)                     # Библиотека imgui_glfw
+isl_out(imgui_opengl3)                  # Библиотека imgui_opengl3
+isl_out(spdlog)                         # Библиотека spdlog
+
 isl_out(${ISL_ADDITIVE_PROJECT})        # Аддитивный шифр
 isl_out(${ISL_MULTIPLICATIVE_PROJECT})  # Мультипликативный шифр
 isl_out(${ISL_AFFINE_PROJECT})          # Аффинный шифр
@@ -232,26 +232,3 @@ isl_out(${ISL_VIGENERE_PROJECT})        # Шифр Виженера
 isl_out(${ISL_HILL_PROJECT})            # Шифр Хилла
 isl_out(${ISL_TRANSPOSITION_PROJECT})   # Шифр перестановки
 isl_out(${ISL_GUI_PROJECT})             # Графическое приложение со всеми шифрами
-
-
-#################################################################################
-#                                 Tests                                         #
-#################################################################################
-set(ISL_GTEST_TEST_SRC
-    src/test/additive.cpp
-)
-
-set(ISL_GTEST_SRC
-    ${ISL_GTEST_TEST_SRC}
-    ${ISL_CIPHER_SRC}
-)
-
-isl_executable(ISL_GTEST_PROJECT  ISL_GTEST_SRC)
-
-target_link_libraries(${ISL_GTEST_PROJECT} gtest gtest_main)
-target_include_directories(${ISL_GTEST_PROJECT} PUBLIC ${GOOGLETEST_INCLUDE_DIR})
-add_test(${ISL_GTEST_PROJECT} ${ISL_GTEST_PROJECT})
-
-isl_out(${ISL_GTEST_PROJECT})
-isl_out(gtest)
-isl_out(gtest_main)
