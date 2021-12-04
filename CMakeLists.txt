@@ -8,6 +8,8 @@ cmake_minimum_required (VERSION 3.13.1)
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 
+option(ISL_BUILD_STATIC_LIBRARY "Build static library" OFF) # Build static library
+
 #################################################################################
 #                               Macros and functions                            #
 #################################################################################
@@ -26,6 +28,16 @@ macro(isl_executable arg_project arg_sources)
     add_executable(${${arg_project}} ${${arg_sources}})
     target_include_directories(${${arg_project}} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 endmacro(isl_executable)
+
+# make library
+macro(isl_library arg_project arg_sources)
+    if(ISL_BUILD_STATIC_LIBRARY)
+        add_library(${${arg_project}} STATIC ${${arg_sources}})
+    else()
+        add_library(${${arg_project}} SHARED ${${arg_sources}})
+    endif()
+    target_include_directories(${${arg_project}} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+endmacro(isl_library)
 
 # create project
 macro(isl_create_project arg_project arg_project_name arg_project_version)
@@ -49,7 +61,7 @@ isl_create_project(ISL_PLAYFAIR_PROJECT       "5_playfair"       "0.0.1")   # Ш
 isl_create_project(ISL_VIGENERE_PROJECT       "6_vigenere"       "0.0.1")   # Шифр Виженера
 isl_create_project(ISL_HILL_PROJECT           "7_hill"           "0.0.1")   # Шифр Хилла
 isl_create_project(ISL_TRANSPOSITION_PROJECT  "8_transposition"  "0.0.1")   # Шифр перестановки
-
+isl_create_project(ISL_CIPHER_LIBRARY         "cipher"           "0.0.1")   # Библиотека cipher
 
 #################################################################################
 #                                    Libraries                                  #
@@ -172,6 +184,12 @@ set(ISL_SRC
     ${ISL_IO_SRC}
 )
 
+# cipher library
+set(ISL_CIPHER_LIBRARY_SRC
+    src/cipher/key.h
+    src/cipher/key.cpp
+)
+
 ### apps 1 - 8
 set(ISL_CIPHER_ADDITIVE_SRC_MAIN       src/cipher/additive/additive_main.cpp             ${ISL_CIPHER_ADDITIVE_SRC})
 set(ISL_CIPHER_MULTIPLICATIVE_SRC_MAIN src/cipher/multiplicative/multiplicative_main.cpp ${ISL_CIPHER_MULTIPLICATIVE_SRC})
@@ -194,6 +212,7 @@ isl_executable(ISL_PLAYFAIR_PROJECT       ISL_CIPHER_PLAYFAIR_SRC_MAIN)         
 isl_executable(ISL_VIGENERE_PROJECT       ISL_CIPHER_VIGENERE_SRC_MAIN)         # Шифр Виженера
 isl_executable(ISL_HILL_PROJECT           ISL_CIPHER_HILL_SRC_MAIN)             # Шифр Хилла
 isl_executable(ISL_TRANSPOSITION_PROJECT  ISL_CIPHER_TRANSPOSITION_SRC_MAIN)    # Шифр перестановки
+isl_library(   ISL_CIPHER_LIBRARY         ISL_CIPHER_LIBRARY_SRC)               # Библиотека cipher
 
 #################################################################################
 #                                Libraries include                              #
@@ -232,3 +251,4 @@ isl_out(${ISL_VIGENERE_PROJECT})        # Шифр Виженера
 isl_out(${ISL_HILL_PROJECT})            # Шифр Хилла
 isl_out(${ISL_TRANSPOSITION_PROJECT})   # Шифр перестановки
 isl_out(${ISL_GUI_PROJECT})             # Графическое приложение со всеми шифрами
+isl_out(${ISL_CIPHER_LIBRARY})          # Библиотека cipher
