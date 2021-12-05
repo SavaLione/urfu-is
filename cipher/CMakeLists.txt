@@ -25,6 +25,16 @@ option(ISL_BUILD_TRANSPOSITION_PROJECT  "Build transposition main test"  ON)    
 #################################################################################
 #                               Macros and functions                            #
 #################################################################################
+# Output directory
+macro(isl_out arg_project)
+    set_target_properties(${${arg_project}}
+        PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # exec
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # lib
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" # runtime
+    )
+endmacro(isl_out)
+
 # make executable
 macro(isl_executable arg_project arg_sources)
     add_executable(${${arg_project}} ${${arg_sources}})
@@ -123,3 +133,16 @@ isl_library_include(ISL_PLAYFAIR_PROJECT)                                       
 isl_library_include(ISL_VIGENERE_PROJECT)                                       # Подключаем к "Шифр Виженера" библиотеку cipher
 isl_library_include(ISL_HILL_PROJECT)                                           # Подключаем к "Шифр Хилла" библиотеку cipher
 isl_library_include(ISL_TRANSPOSITION_PROJECT)                                  # Подключаем к "Шифр перестановки" библиотеку cipher
+
+#################################################################################
+#                                 Output directory                              #
+#################################################################################
+isl_out(ISL_CIPHER_LIBRARY)
+isl_out(ISL_ADDITIVE_PROJECT)
+isl_out(ISL_MULTIPLICATIVE_PROJECT)
+isl_out(ISL_AFFINE_PROJECT)
+isl_out(ISL_AUTOKEY_PROJECT)
+isl_out(ISL_PLAYFAIR_PROJECT)
+isl_out(ISL_VIGENERE_PROJECT)
+isl_out(ISL_HILL_PROJECT)
+isl_out(ISL_TRANSPOSITION_PROJECT)

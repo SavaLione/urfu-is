@@ -1,5 +1,6 @@
 #include "cipher/additive.h"
-
+#include <stdlib.h>
+#include <string>
 #include <iostream>
 
 additive::additive()
@@ -10,11 +11,12 @@ additive::~additive()
 {
 }
 
-void additive::set_key(std::string key)
+void additive::set_key(std::string const &key)
 {
     int ret = 0;
     if (key == "")
     {
+        _i_key = 0;
         return;
     }
 
@@ -22,35 +24,34 @@ void additive::set_key(std::string key)
     {
         ret = std::stoi(key);
     }
-    catch (const std::exception &e)
+    catch (...)
     {
         ret = 0;
-        // spdlog::error(e.what());
     }
 
     ret = ret % get_power();
-    _key = ret;
+    _i_key = ret;
 }
 
 std::string additive::get_key()
 {
-    return std::to_string(_key);
+    return std::to_string(_i_key);
 }
 
 void additive::encrypt()
 {
     std::string cipher_text;
-    for (int i = 0; i < get_power(); i++)
+    for (int i = 0; i < _source_text.size(); i++)
     {
         int z = _find(_source_text[i]);
-        if ((z + _key) >= get_power())
+        if ((z + _i_key) >= get_power())
         {
-            int temp = (z + _key) - get_power();
+            int temp = (z + _i_key) - get_power();
             cipher_text += _alphabet[temp];
         }
         else
         {
-            cipher_text += _alphabet[z + _key];
+            cipher_text += _alphabet[z + _i_key];
         }
     }
     _cipher_text = cipher_text;
@@ -62,14 +63,14 @@ void additive::decrypt()
     for (int i = 0; i < _cipher_text.size(); i++)
     {
         int z = _find(_cipher_text[i]);
-        if ((z - _key) < 0)
+        if ((z - _i_key) < 0)
         {
-            int temp = (z - _key) + get_power();
+            int temp = (z - _i_key) + get_power();
             decrypt_text += _alphabet[temp];
         }
         else
         {
-            decrypt_text += _alphabet[z - _key];
+            decrypt_text += _alphabet[z - _i_key];
         }
     }
     _source_text = decrypt_text;

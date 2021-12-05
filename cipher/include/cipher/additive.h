@@ -14,14 +14,14 @@ public:
     additive();
     ~additive();
 
-    void set_key(std::string key);
+    void set_key(std::string const &key);
     std::string get_key();
 
     void encrypt();
     void decrypt();
 
 private:
-    int _key = 0;
+    int _i_key = 0;
     int _find(char character);
 };
 

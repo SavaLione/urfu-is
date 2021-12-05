@@ -143,3 +143,4 @@ isl_out(imgui_glfw)                     # Библиотека imgui_glfw
 isl_out(imgui_opengl3)                  # Библиотека imgui_opengl3
 isl_out(spdlog)                         # Библиотека spdlog
 isl_out(cipher)                         # Библиотека cipher
+isl_out(ISL_GUI_PROJECT)                # Графическое приложение

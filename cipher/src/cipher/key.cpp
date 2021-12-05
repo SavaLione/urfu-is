@@ -1,34 +1,37 @@
 #include "cipher/key.h"
 
 #include <iostream>
+#include <string>
 
 key::key()
 {
-
 }
 
 key::~key()
 {
-
 }
 
 void key::encrypt()
-{}
+{
+
+}
 
 void key::decrypt()
-{}
+{
 
-void key::set_alphabet(std::string alphabet)
+}
+
+void key::set_alphabet(std::string const &alphabet)
 {
     _alphabet = alphabet;
 }
 
-void key::set_source_text(std::string source_text)
+void key::set_source_text(std::string const &source_text)
 {
     _source_text = source_text;
 }
 
-void key::set_cipher_text(std::string cipher_text)
+void key::set_cipher_text(std::string const &cipher_text)
 {
     _cipher_text = cipher_text;
 }
@@ -60,7 +63,7 @@ std::string key::get_key()
 
 int key::get_power()
 {
-    return _key.size();
+    return _alphabet.size();
 }
 
 void key::print()
