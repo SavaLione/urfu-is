@@ -8,8 +8,6 @@ cmake_minimum_required (VERSION 3.13.1)
 # flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")               # default
 
-option(ISL_BUILD_STATIC_LIBRARY "Build static library" OFF) # Build static library
-
 #################################################################################
 #                               Macros and functions                            #
 #################################################################################
@@ -29,16 +27,6 @@ macro(isl_executable arg_project arg_sources)
     target_include_directories(${${arg_project}} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 endmacro(isl_executable)
 
-# make library
-macro(isl_library arg_project arg_sources)
-    if(ISL_BUILD_STATIC_LIBRARY)
-        add_library(${${arg_project}} STATIC ${${arg_sources}})
-    else()
-        add_library(${${arg_project}} SHARED ${${arg_sources}})
-    endif()
-    target_include_directories(${${arg_project}} PUBLIC ${PROJECT_SOURCE_DIR}/src)
-endmacro(isl_library)
-
 # create project
 macro(isl_create_project arg_project arg_project_name arg_project_version)
     set(${arg_project} ${arg_project_name})
@@ -52,16 +40,7 @@ endmacro(isl_create_project)
 #################################################################################
 #                                     Projects                                  #
 #################################################################################
-isl_create_project(ISL_GUI_PROJECT            "0_gui"            "0.0.1")   # Графическое приложение со всеми шифрами
-isl_create_project(ISL_ADDITIVE_PROJECT       "1_additive"       "0.0.1")   # Аддитивный шифр
-isl_create_project(ISL_MULTIPLICATIVE_PROJECT "2_multiplicative" "0.0.1")   # Мультипликативный шифр
-isl_create_project(ISL_AFFINE_PROJECT         "3_affine"         "0.0.1")   # Аффинный шифр
-isl_create_project(ISL_AUTOKEY_PROJECT        "4_autokey"        "0.0.1")   # Автоключевой шифр
-isl_create_project(ISL_PLAYFAIR_PROJECT       "5_playfair"       "0.0.1")   # Шифр Плейфера
-isl_create_project(ISL_VIGENERE_PROJECT       "6_vigenere"       "0.0.1")   # Шифр Виженера
-isl_create_project(ISL_HILL_PROJECT           "7_hill"           "0.0.1")   # Шифр Хилла
-isl_create_project(ISL_TRANSPOSITION_PROJECT  "8_transposition"  "0.0.1")   # Шифр перестановки
-isl_create_project(ISL_CIPHER_LIBRARY         "cipher"           "0.0.1")   # Библиотека cipher
+isl_create_project(ISL_GUI_PROJECT            "0_gui"            "0.0.1")       # Графическое приложение со всеми шифрами
 
 #################################################################################
 #                                    Libraries                                  #
@@ -89,69 +68,13 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/lib/imgui)
 set(SPDLOG_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/spdlog/include" CACHE PATH "spdlog lib include")
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/spdlog)
 
+# cipher
+set(CIPHER_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/cipher/include" CACHE PATH "cipher lib include")
+add_subdirectory(${PROJECT_SOURCE_DIR}/cipher)
+
 #################################################################################
 #                                     Sources                                   #
 #################################################################################
-# cipher additive
-set(ISL_CIPHER_ADDITIVE_SRC
-    src/cipher/additive/additive.h
-    src/cipher/additive/additive.cpp
-)
-
-# cipher multiplicative
-set(ISL_CIPHER_MULTIPLICATIVE_SRC
-    src/cipher/multiplicative/multiplicative.h
-    src/cipher/multiplicative/multiplicative.cpp
-)
-
-# cipher affine
-set(ISL_CIPHER_AFFINE_SRC
-    src/cipher/affine/affine.h
-    src/cipher/affine/affine.cpp
-)
-
-# cipher autokey
-set(ISL_CIPHER_AUTOKEY_SRC
-    src/cipher/autokey/autokey.h
-    src/cipher/autokey/autokey.cpp
-)
-
-# cipher playfair
-set(ISL_CIPHER_PLAYFAIR_SRC
-    src/cipher/playfair/playfair.h
-    src/cipher/playfair/playfair.cpp
-)
-
-# cipher vigenere
-set(ISL_CIPHER_VIGENERE_SRC
-    src/cipher/vigenere/vigenere.h
-    src/cipher/vigenere/vigenere.cpp
-)
-
-# cipher hill
-set(ISL_CIPHER_HILL_SRC
-    src/cipher/hill/hill.h
-    src/cipher/hill/hill.cpp
-)
-
-# cipher transposition
-set(ISL_CIPHER_TRANSPOSITION_SRC
-    src/cipher/transposition/transposition.h
-    src/cipher/transposition/transposition.cpp
-)
-
-# ciphers
-set(ISL_CIPHER_SRC
-    ${ISL_CIPHER_ADDITIVE_SRC}
-    ${ISL_CIPHER_MULTIPLICATIVE_SRC}
-    ${ISL_CIPHER_AFFINE_SRC}
-    ${ISL_CIPHER_AUTOKEY_SRC}
-    ${ISL_CIPHER_PLAYFAIR_SRC}
-    ${ISL_CIPHER_VIGENERE_SRC}
-    ${ISL_CIPHER_HILL_SRC}
-    ${ISL_CIPHER_TRANSPOSITION_SRC}
-)
-
 # core
 set(ISL_CORE_SRC
     src/core/compiler_version.h
@@ -178,41 +101,15 @@ set(ISL_IO_SRC
 
 # isl gui main application
 set(ISL_SRC
-    ${ISL_CIPHER_SRC}
     ${ISL_CORE_SRC}
     ${ISL_GUI_SRC}
     ${ISL_IO_SRC}
 )
 
-# cipher library
-set(ISL_CIPHER_LIBRARY_SRC
-    src/cipher/key.h
-    src/cipher/key.cpp
-)
-
-### apps 1 - 8
-set(ISL_CIPHER_ADDITIVE_SRC_MAIN       src/cipher/additive/additive_main.cpp             ${ISL_CIPHER_ADDITIVE_SRC})
-set(ISL_CIPHER_MULTIPLICATIVE_SRC_MAIN src/cipher/multiplicative/multiplicative_main.cpp ${ISL_CIPHER_MULTIPLICATIVE_SRC})
-set(ISL_CIPHER_AFFINE_SRC_MAIN         src/cipher/affine/affine_main.cpp                 ${ISL_CIPHER_AFFINE_SRC})
-set(ISL_CIPHER_AUTOKEY_SRC_MAIN        src/cipher/autokey/autokey_main.cpp               ${ISL_CIPHER_AUTOKEY_SRC})
-set(ISL_CIPHER_PLAYFAIR_SRC_MAIN       src/cipher/playfair/playfair_main.cpp             ${ISL_CIPHER_PLAYFAIR_SRC})
-set(ISL_CIPHER_VIGENERE_SRC_MAIN       src/cipher/vigenere/vigenere_main.cpp             ${ISL_CIPHER_VIGENERE_SRC})
-set(ISL_CIPHER_HILL_SRC_MAIN           src/cipher/hill/hill_main.cpp                     ${ISL_CIPHER_HILL_SRC})
-set(ISL_CIPHER_TRANSPOSITION_SRC_MAIN  src/cipher/transposition/transposition_main.cpp   ${ISL_CIPHER_TRANSPOSITION_SRC})
-
 #################################################################################
 #                                     Executable                                #
 #################################################################################
 isl_executable(ISL_GUI_PROJECT            ISL_SRC)                              # Графическое приложение со всеми шифрами
-isl_executable(ISL_ADDITIVE_PROJECT       ISL_CIPHER_ADDITIVE_SRC_MAIN)         # Аддитивный шифр
-isl_executable(ISL_MULTIPLICATIVE_PROJECT ISL_CIPHER_MULTIPLICATIVE_SRC_MAIN)   # Мультипликативный шифр
-isl_executable(ISL_AFFINE_PROJECT         ISL_CIPHER_AFFINE_SRC_MAIN)           # Аффинный шифр
-isl_executable(ISL_AUTOKEY_PROJECT        ISL_CIPHER_AUTOKEY_SRC_MAIN)          # Автоключевой шифр
-isl_executable(ISL_PLAYFAIR_PROJECT       ISL_CIPHER_PLAYFAIR_SRC_MAIN)         # Шифр Плейфера
-isl_executable(ISL_VIGENERE_PROJECT       ISL_CIPHER_VIGENERE_SRC_MAIN)         # Шифр Виженера
-isl_executable(ISL_HILL_PROJECT           ISL_CIPHER_HILL_SRC_MAIN)             # Шифр Хилла
-isl_executable(ISL_TRANSPOSITION_PROJECT  ISL_CIPHER_TRANSPOSITION_SRC_MAIN)    # Шифр перестановки
-isl_library(   ISL_CIPHER_LIBRARY         ISL_CIPHER_LIBRARY_SRC)               # Библиотека cipher
 
 #################################################################################
 #                                Libraries include                              #
@@ -233,6 +130,10 @@ target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${IMGUI_INCLUDE_DIR})
 target_link_libraries(${ISL_GUI_PROJECT} spdlog)
 target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${SPDLOG_INCLUDE_DIR})
 
+# cipher
+target_link_libraries(${ISL_GUI_PROJECT} cipher)
+target_include_directories(${ISL_GUI_PROJECT} PUBLIC ${CIPHER_INCLUDE_DIR})
+
 #################################################################################
 #                                 Output directory                              #
 #################################################################################
@@ -241,14 +142,4 @@ isl_out(imgui)                          # Библиотека imgui
 isl_out(imgui_glfw)                     # Библиотека imgui_glfw
 isl_out(imgui_opengl3)                  # Библиотека imgui_opengl3
 isl_out(spdlog)                         # Библиотека spdlog
-
-isl_out(${ISL_ADDITIVE_PROJECT})        # Аддитивный шифр
-isl_out(${ISL_MULTIPLICATIVE_PROJECT})  # Мультипликативный шифр
-isl_out(${ISL_AFFINE_PROJECT})          # Аффинный шифр
-isl_out(${ISL_AUTOKEY_PROJECT})         # Автоключевой шифр
-isl_out(${ISL_PLAYFAIR_PROJECT})        # Шифр Плейфера
-isl_out(${ISL_VIGENERE_PROJECT})        # Шифр Виженера
-isl_out(${ISL_HILL_PROJECT})            # Шифр Хилла
-isl_out(${ISL_TRANSPOSITION_PROJECT})   # Шифр перестановки
-isl_out(${ISL_GUI_PROJECT})             # Графическое приложение со всеми шифрами
-isl_out(${ISL_CIPHER_LIBRARY})          # Библиотека cipher
+isl_out(cipher)                         # Библиотека cipher
