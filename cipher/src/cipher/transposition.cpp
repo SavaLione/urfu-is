@@ -2,51 +2,21 @@
 
 transposition::transposition()
 {
+    _set_name("transposition");
+    _set_description("transposition cipher");
 }
 
 transposition::~transposition()
 {
 }
 
-void transposition::set_alphabet(std::string alphabet)
-{
-    _alphabet = alphabet;
-}
 
-void transposition::set_source_text(std::string source_text)
-{
-    _source_text = source_text;
-}
 
-void transposition::set_cipher_text(std::string cipher_text)
-{
-    _cipher_text = cipher_text;
-}
 
 void transposition::set_key(std::string const &key)
 {
     _key = key;
     _set_permutation_order();
-}
-
-std::string transposition::get_alphabet()
-{
-    return _alphabet;
-}
-
-std::string transposition::get_source_text()
-{
-    return _source_text;
-}
-
-std::string transposition::get_cipher_text()
-{
-    return _cipher_text;
-}
-
-std::string transposition::get_key()
-{
-    return _key;
 }
 
 void transposition::_set_permutation_order()
