@@ -1,7 +1,6 @@
 #include "cipher/key.h"
 
 #include <iostream>
-#include <string>
 
 key::key()
 {
