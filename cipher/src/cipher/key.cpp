@@ -88,3 +88,23 @@ void key::print()
 
     std::cout << ret;
 }
+
+void key::_set_name(std::string const &name)
+{
+    _name = name;
+}
+
+void key::_set_description(std::string const &description)
+{
+    _description = description;
+}
+
+std::string key::get_name()
+{
+    return _name;
+}
+
+std::string key::get_description()
+{
+    return _description;
+}

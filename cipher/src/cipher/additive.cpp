@@ -5,6 +5,8 @@
 
 additive::additive()
 {
+    _set_name("additive");
+    _set_description("additive cipher");
 }
 
 additive::~additive()
