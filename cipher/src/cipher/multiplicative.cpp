@@ -1,31 +1,20 @@
 #include "cipher/multiplicative.h"
+#include <string>
 
 multiplicative::multiplicative()
 {
+    _set_name("multiplicative");
+    _set_description("multiplicative cipher");
 }
 
 multiplicative::~multiplicative()
 {
 }
 
-std::string multiplicative::get_source_text()
-{
-    return _source_text;
-}
-
-std::string multiplicative::get_cipher_text()
-{
-    return _cipher_text;
-}
-
-std::string multiplicative::get_alphabet()
-{
-    return _alphabet;
-}
-
 void multiplicative::set_key(std::string key)
 {
     int ret = 0;
+
     if (key == "")
     {
         return;
@@ -38,36 +27,11 @@ void multiplicative::set_key(std::string key)
     catch (const std::exception &e)
     {
         ret = 0;
-        // spdlog::error(e.what());
     }
 
-    // ret = ret % _alphabet.size();
-    _key = ret;
-}
+    _i_key = ret;
 
-std::string multiplicative::get_key()
-{
-    return std::to_string(_key);
-}
-
-void multiplicative::set_alphabet(std::string alphabet)
-{
-    _alphabet = alphabet;
-}
-
-void multiplicative::set_source_text(std::string source_text)
-{
-    _source_text = source_text;
-}
-
-void multiplicative::set_cipher_text(std::string cipher_text)
-{
-    _cipher_text = cipher_text;
-}
-
-int multiplicative::get_power()
-{
-    return _alphabet.size();
+    _key = std::to_string(_i_key);
 }
 
 void multiplicative::encrypt()
@@ -76,7 +40,7 @@ void multiplicative::encrypt()
     int power = get_power();
     for (int i = 0; i < _source_text.size(); i++)
     {
-        cipher_text += _alphabet[(_find(_source_text[i]) * _key) % power];
+        cipher_text += _alphabet[(_alphabet.find(_source_text[i]) * _i_key) % power];
     }
     _cipher_text = cipher_text;
 }
@@ -86,20 +50,14 @@ void multiplicative::decrypt()
     std::string decrypt_text;
     int power = get_power();
 
-    int inverse = _modular_inverse(_key, get_power());
+    int inverse = _modular_inverse(_i_key, get_power());
 
     for (int i = 0; i < _cipher_text.size(); i++)
     {
-        decrypt_text += _alphabet[(_find(_cipher_text[i]) * inverse) % power];
+        decrypt_text += _alphabet[(_alphabet.find(_cipher_text[i]) * inverse) % power];
     }
 
     _source_text = decrypt_text;
-}
-
-int multiplicative::_find(char character)
-{
-    int found = _alphabet.find(character);
-    return found;
 }
 
 int multiplicative::_modular_inverse(int a, int m)
@@ -108,7 +66,9 @@ int multiplicative::_modular_inverse(int a, int m)
     int y = 0, x = 1;
  
     if (m == 1)
+    {
         return 0;
+    }
  
     while (a > 1)
     {
@@ -128,7 +88,9 @@ int multiplicative::_modular_inverse(int a, int m)
  
     // Make x positive
     if (x < 0)
+    {
         x += m0;
+    }
  
     return x;
 }
