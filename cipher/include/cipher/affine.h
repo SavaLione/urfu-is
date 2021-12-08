@@ -10,20 +10,20 @@
 class affine : public key
 {
 public:
-    affine();
-    ~affine();
+	affine();
+	~affine();
 
-    void set_key(std::string const &key);
+	void set_key(std::string const &key);
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
 private:
-    int _key_a = 3;
-    int _key_b = 5;
+	int _key_a = 3;
+	int _key_b = 5;
 
-    int _gcd(int a, int b);
-    int _modular_inverse(int a, int m);
+	int _gcd(int a, int b);
+	int _modular_inverse(int a, int m);
 };
 
 #endif // CIPHER_AFFINE_H

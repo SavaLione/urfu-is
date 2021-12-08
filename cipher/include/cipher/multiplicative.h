@@ -10,18 +10,18 @@
 class multiplicative : public key
 {
 public:
-    multiplicative();
-    ~multiplicative();
+	multiplicative();
+	~multiplicative();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
-    void set_key(std::string key);
+	void set_key(std::string key);
 
 private:
-    int _i_key = 0;
+	int _i_key = 0;
 
-    int _modular_inverse(int a, int m);
+	int _modular_inverse(int a, int m);
 };
 
 #endif // CIPHER_MULTIPLICATIVE_H

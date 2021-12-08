@@ -16,5 +16,5 @@ settings::~settings()
 
 log_level settings::l_level()
 {
-    return _l_level;
+	return _l_level;
 }

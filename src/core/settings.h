@@ -9,35 +9,35 @@
 
 enum log_level
 {
-    TRACE = 1,
-    DEBUG = 2,
-    INFO = 3,
-    WARN = 4,
-    ERROR = 5,
-    CRITICAL = 6
+	TRACE	 = 1,
+	DEBUG	 = 2,
+	INFO	 = 3,
+	WARN	 = 4,
+	ERROR	 = 5,
+	CRITICAL = 6
 };
 
 class settings
 {
 public:
-    static settings &Instance()
-    {
-        static settings s;
-        return s;
-    }
+	static settings &Instance()
+	{
+		static settings s;
+		return s;
+	}
 
-    ~settings();
+	~settings();
 
-    /* Уровень логирования */
-    log_level l_level();
+	/* Уровень логирования */
+	log_level l_level();
 
 private:
-    settings();
-    settings(settings const &) = delete;
-    settings &operator=(settings const &) = delete;
+	settings();
+	settings(settings const &) = delete;
+	settings &operator=(settings const &) = delete;
 
-    /* Уровень логирования */
-    log_level _l_level = log_level::INFO;
+	/* Уровень логирования */
+	log_level _l_level = log_level::INFO;
 };
 
 #endif // CORE_SETTINGS_H

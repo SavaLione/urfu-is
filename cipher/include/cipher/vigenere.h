@@ -10,14 +10,14 @@
 class vigenere : public key
 {
 public:
-    vigenere();
-    ~vigenere();
+	vigenere();
+	~vigenere();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
 private:
-    std::string _key_ph;
+	std::string _key_ph;
 };
 
 #endif // CIPHER_VIGENERE_H

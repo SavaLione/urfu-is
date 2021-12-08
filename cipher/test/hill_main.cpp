@@ -2,10 +2,10 @@
 
 int main()
 {
-    hill h;
-    h.encryption();
-    std::cout << "- - -" << std::endl;
-    h.decryption();
+	hill h;
+	h.encryption();
+	std::cout << "- - -" << std::endl;
+	h.decryption();
 
-    return 0;
+	return 0;
 }

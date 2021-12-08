@@ -3,19 +3,19 @@
 
 int main()
 {
-    transposition tp;
-    tp.set_source_text("Geeks for Geeks");
-    tp.set_key("HACK");
+	transposition tp;
+	tp.set_source_text("Geeks for Geeks");
+	tp.set_key("HACK");
 
-    tp.encrypt();
+	tp.encrypt();
 
-    tp.print();
-    std::cout << std::endl;
+	tp.print();
+	std::cout << std::endl;
 
-    tp.set_source_text("");
-    tp.decrypt();
+	tp.set_source_text("");
+	tp.decrypt();
 
-    tp.print();
+	tp.print();
 
-    return 0;
+	return 0;
 }

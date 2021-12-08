@@ -1,24 +1,23 @@
+#include <cipher/playfair.h>
 #include <iostream>
 #include <string>
 
-#include <cipher/playfair.h>
-
 int main()
 {
-    playfair pf;
+	playfair pf;
 
-    pf.set_source_text("instruments");
-    pf.set_key("Monarchy");
+	pf.set_source_text("instruments");
+	pf.set_key("Monarchy");
 
-    pf.encrypt();
+	pf.encrypt();
 
-    pf.print();
+	pf.print();
 
-    pf.decrypt();
+	pf.decrypt();
 
-    std::cout << std::endl;
+	std::cout << std::endl;
 
-    pf.print();
+	pf.print();
 
-    return 0;
+	return 0;
 }

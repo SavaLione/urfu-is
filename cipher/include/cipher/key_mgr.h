@@ -6,29 +6,27 @@
 #define CIPHER_KEY_MGR_H
 
 #include <cipher/additive.h>
-#include <cipher/multiplicative.h>
 #include <cipher/affine.h>
 #include <cipher/autokey.h>
+#include <cipher/multiplicative.h>
 #include <cipher/playfair.h>
 #include <cipher/vigenere.h>
 //#include <cipher/hill.h>
 #include <cipher/transposition.h>
-
 #include <vector>
 
 class key_mgr
 {
 public:
-    key_mgr();
-    ~key_mgr();
+	key_mgr();
+	~key_mgr();
 
-    void add_key(key const &k);
+	void add_key(key const &k);
 
-    void print();
+	void print();
 
 private:
-    std::vector<key> _keys;
-
+	std::vector<key> _keys;
 };
 
 #endif // CIPHER_KEY_MGR_H

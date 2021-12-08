@@ -6,24 +6,25 @@
 #define CIPHER_TRANSPOSITION_H
 
 #include "cipher/key.h"
+
 #include <bits/stdc++.h>
 
 class transposition : public key
 {
 public:
-    transposition();
-    ~transposition();
+	transposition();
+	~transposition();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
-    void set_key(std::string const& key);
+	void set_key(std::string const &key);
 
 private:
-    void _set_permutation_order();
-    std::string _encrypt_message(std::string msg);
-    std::string _decrypt_message(std::string cipher);
-    std::map<int,int> _key_map;
+	void _set_permutation_order();
+	std::string _encrypt_message(std::string msg);
+	std::string _decrypt_message(std::string cipher);
+	std::map<int, int> _key_map;
 };
 
 #endif // CIPHER_TRANSPOSITION_H

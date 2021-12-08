@@ -10,11 +10,11 @@
 class playfair : public key
 {
 public:
-    playfair();
-    ~playfair();
+	playfair();
+	~playfair();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 };
 
 #endif // CIPHER_PLAYFAIR_H

@@ -10,14 +10,14 @@
 class autokey : public key
 {
 public:
-    autokey();
-    ~autokey();
+	autokey();
+	~autokey();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
 private:
-    std::string _key_ph = "";
+	std::string _key_ph = "";
 };
 
 #endif // CIPHER_AUTOKEY_H

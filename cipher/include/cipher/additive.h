@@ -10,18 +10,18 @@
 class additive : public key
 {
 public:
-    additive();
-    ~additive();
+	additive();
+	~additive();
 
-    void set_key(std::string const &key);
-    std::string get_key();
+	void set_key(std::string const &key);
+	std::string get_key();
 
-    void encrypt();
-    void decrypt();
+	void encrypt();
+	void decrypt();
 
 private:
-    int _i_key = 0;
-    int _find(char character);
+	int _i_key = 0;
+	int _find(char character);
 };
 
 #endif // CIPHER_ADDITIVE_H
