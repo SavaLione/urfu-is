@@ -214,40 +214,12 @@ static std::string Decipher(std::string input, std::string key)
 
 playfair::playfair()
 {
+    _set_name("playfair");
+    _set_description("playfair cipher");
 }
 
 playfair::~playfair()
 {
-}
-
-void playfair::set_key(std::string const &key)
-{
-    _key = key;
-}
-
-void playfair::set_source_text(std::string source_text)
-{
-    _source_text = source_text;
-}
-
-void playfair::set_cipher_text(std::string cipher_text)
-{
-    _cipher_text = cipher_text;
-}
-
-std::string playfair::get_key()
-{
-    return _key;
-}
-
-std::string playfair::get_source_text()
-{
-    return _source_text;
-}
-
-std::string playfair::get_cipher_text()
-{
-    return _cipher_text;
 }
 
 void playfair::encrypt()
