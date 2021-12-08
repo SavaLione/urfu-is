@@ -29,7 +29,6 @@ public:
 private:
     std::vector<key> _keys;
 
-    
 };
 
 #endif // CIPHER_KEY_MGR_H
