@@ -540,13 +540,10 @@ void gui::affine_cipher()
 
         _choose_alphabet();
 
-        ImGui::InputTextWithHint("Key 1", "enter key 1", &_key_a);
-        ImGui::InputTextWithHint("Key 2", "enter key 2", &_key_b);
+        ImGui::InputTextWithHint("Key", "enter key", &_key);
 
-        std::string _s_key = "Key_1: ";
-        _s_key += af.get_key_a();
-        _s_key += " key_2: ";
-        _s_key += af.get_key_b();
+        std::string _s_key = "Key: ";
+        _s_key += af.get_key();
 
         ImGui::Text(_s_key.c_str());
         ImGui::SameLine();
@@ -564,15 +561,15 @@ void gui::affine_cipher()
         {
             af.set_alphabet(_alphabet);
             af.set_source_text(_source_text);
-            af.set_key_a(_key_a);
-            af.set_key_b(_key_b);
+            af.set_key(_key);
+            
             af.encrypt();
 
             _cipher_text = af.get_cipher_text();
         }
 
         std::string str_cipher_text = "Cipher text: ";
-        str_cipher_text += af.get_cipher_text();
+        str_cipher_text += _cipher_text;
 
         ImGui::Text(str_cipher_text.c_str());
 
@@ -586,15 +583,15 @@ void gui::affine_cipher()
         {
             af.set_alphabet(_alphabet);
             af.set_cipher_text(_cipher_text);
-            af.set_key_a(_key_a);
-            af.set_key_b(_key_b);
+            af.set_key(_key);
+            
             af.decrypt();
 
             _source_text = af.get_source_text();
         }
 
         std::string str_source_text = "Source text: ";
-        str_source_text += af.get_source_text();
+        str_source_text += _source_text;
 
         ImGui::Text(str_source_text.c_str());
 

@@ -11,14 +11,14 @@
 #include <glfw/glfw3.h>
 #include <string>
 
-#include "cipher/additive/additive.h"
-#include "cipher/multiplicative/multiplicative.h"
-#include "cipher/affine/affine.h"
-#include "cipher/autokey/autokey.h"
-#include "cipher/playfair/playfair.h"
-#include "cipher/vigenere/vigenere.h"
-//#include "cipher/hill/hill.h"
-#include "cipher/transposition/transposition.h"
+#include <cipher/additive.h>
+#include <cipher/multiplicative.h>
+#include <cipher/affine.h>
+#include <cipher/autokey.h>
+#include <cipher/playfair.h>
+#include <cipher/vigenere.h>
+//#include <cipher/hill.h>
+#include <cipher/transposition.h>
 
 class gui
 {
@@ -136,12 +136,6 @@ private:
 
     /* Key */
     std::string _key = "";
-
-    /* Key a */
-    std::string _key_a = "3";
-
-    /* Key b */
-    std::string _key_b = "5";
 
     /* Source text */
     std::string _source_text = "";
