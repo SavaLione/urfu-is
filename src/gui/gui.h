@@ -137,12 +137,6 @@ private:
     /* Key */
     std::string _key = "";
 
-    /* Key a */
-    std::string _key_a = "3";
-
-    /* Key b */
-    std::string _key_b = "5";
-
     /* Source text */
     std::string _source_text = "";
 

@@ -6,7 +6,6 @@
 #define CIPHER_ADDITIVE_H
 
 #include "cipher/key.h"
-#include <string>
 
 class additive : public key
 {

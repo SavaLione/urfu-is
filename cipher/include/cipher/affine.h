@@ -5,43 +5,24 @@
 #ifndef CIPHER_AFFINE_H
 #define CIPHER_AFFINE_H
 
-#include <string>
+#include "cipher/key.h"
 
-class affine
+class affine : public key
 {
 public:
     affine();
     ~affine();
 
-    std::string get_source_text();
-    std::string get_cipher_text();
-    std::string get_alphabet();
-    std::string get_key_a();
-    std::string get_key_b();
-
-    int get_power();
+    void set_key(std::string const &key);
 
     void encrypt();
     void decrypt();
 
-    void set_alphabet(std::string alphabet);
-    void set_source_text(std::string source_text);
-    void set_cipher_text(std::string cipher_text);
-    void set_key_a(std::string key_a);
-    void set_key_b(std::string key_b);
-
 private:
-    std::string _alphabet;
-    std::string _source_text;
-    std::string _cipher_text;
-
     int _key_a = 3;
     int _key_b = 5;
 
-    int _find(char character);
-    char _find_char(int ch);
-
-    int gcd(int a, int b);
+    int _gcd(int a, int b);
     int _modular_inverse(int a, int m);
 };
 
