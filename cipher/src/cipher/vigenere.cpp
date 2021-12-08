@@ -2,50 +2,12 @@
 
 vigenere::vigenere()
 {
+    _set_name("vigenere");
+    _set_description("vigenere cipher");
 }
 
 vigenere::~vigenere()
 {
-}
-
-void vigenere::set_key(std::string const &key)
-{
-    _key = key;
-}
-
-void vigenere::set_alphabet(std::string alphabet)
-{
-    _alphabet = alphabet;
-}
-
-void vigenere::set_source_text(std::string source_text)
-{
-    _source_text = source_text;
-}
-
-void vigenere::set_cipher_text(std::string cipher_text)
-{
-    _cipher_text = cipher_text;
-}
-
-std::string vigenere::get_key()
-{
-    return _key;
-}
-
-std::string vigenere::get_alphabet()
-{
-    return _alphabet;
-}
-
-std::string vigenere::get_source_text()
-{
-    return _source_text;
-}
-
-std::string vigenere::get_cipher_text()
-{
-    return _cipher_text;
 }
 
 void vigenere::encrypt()
