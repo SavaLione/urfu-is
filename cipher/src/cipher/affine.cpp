@@ -1,7 +1,4 @@
 #include "cipher/affine.h"
-#include <string>
-
-#include <iostream>
 
 affine::affine()
 {

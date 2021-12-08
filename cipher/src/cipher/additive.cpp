@@ -1,7 +1,4 @@
 #include "cipher/additive.h"
-#include <stdlib.h>
-#include <string>
-#include <iostream>
 
 additive::additive()
 {
