@@ -10,14 +10,13 @@ int main()
     mp.set_key("8");
     mp.encrypt();
 
-    std::cout << mp.get_source_text() << std::endl;
-    std::cout << mp.get_cipher_text() << std::endl;
+    mp.print();
     std::cout << std::endl;
 
     mp.set_source_text("");
     mp.decrypt();
-    std::cout << mp.get_source_text() << std::endl;
-    std::cout << mp.get_cipher_text() << std::endl;
+    
+    mp.print();
     
     return 0;
 }
