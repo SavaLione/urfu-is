@@ -13,6 +13,7 @@ vigenere::~vigenere()
 void vigenere::encrypt()
 {
 	_cipher_text = "";
+	_key_ph = "";
 
 	for(int i = 0; i < _source_text.size(); i++)
 	{
@@ -41,6 +42,7 @@ void vigenere::encrypt()
 void vigenere::decrypt()
 {
 	_source_text = "";
+	_key_ph = "";
 
 	for(int i = 0; i < _cipher_text.size(); i++)
 	{
