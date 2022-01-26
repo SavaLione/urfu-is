@@ -6,7 +6,7 @@ int main()
 	multiplicative mp;
 	mp.set_alphabet("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ");
 	mp.set_source_text("The quick brown fox jumps over the lazy dog 1234567890");
-	mp.set_key("8");
+	mp.set_key(8);
 	mp.encrypt();
 
 	mp.print();

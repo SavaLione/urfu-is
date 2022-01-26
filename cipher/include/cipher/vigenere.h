@@ -7,7 +7,7 @@
 
 #include "cipher/key.h"
 
-class vigenere : public key
+class vigenere : public key<std::string>
 {
 public:
 	vigenere();

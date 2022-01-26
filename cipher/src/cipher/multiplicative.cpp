@@ -12,36 +12,13 @@ multiplicative::~multiplicative()
 {
 }
 
-void multiplicative::set_key(std::string key)
-{
-	int ret = 0;
-
-	if(key == "")
-	{
-		return;
-	}
-
-	try
-	{
-		ret = std::stoi(key);
-	}
-	catch(const std::exception &e)
-	{
-		ret = 0;
-	}
-
-	_i_key = ret;
-
-	_key = std::to_string(_i_key);
-}
-
 void multiplicative::encrypt()
 {
 	std::string cipher_text;
 	int power = get_power();
 	for(int i = 0; i < _source_text.size(); i++)
 	{
-		cipher_text += _alphabet[(_alphabet.find(_source_text[i]) * _i_key) % power];
+		cipher_text += _alphabet[(_alphabet.find(_source_text[i]) * _key) % power];
 	}
 	_cipher_text = cipher_text;
 }
@@ -51,7 +28,7 @@ void multiplicative::decrypt()
 	std::string decrypt_text;
 	int power = get_power();
 
-	int inverse = _modular_inverse(_i_key, get_power());
+	int inverse = _modular_inverse(_key, get_power());
 
 	for(int i = 0; i < _cipher_text.size(); i++)
 	{

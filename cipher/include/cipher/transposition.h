@@ -9,7 +9,7 @@
 
 #include <bits/stdc++.h>
 
-class transposition : public key
+class transposition : public key<std::string>
 {
 public:
 	transposition();

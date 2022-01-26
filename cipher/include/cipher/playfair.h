@@ -7,7 +7,7 @@
 
 #include "cipher/key.h"
 
-class playfair : public key
+class playfair : public key<std::string>
 {
 public:
 	playfair();

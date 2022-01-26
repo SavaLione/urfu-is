@@ -21,7 +21,6 @@ option(ISL_BUILD_PLAYFAIR_PROJECT       "Build playfair main test"       ON)    
 option(ISL_BUILD_VIGENERE_PROJECT       "Build vigenere main test"       ON)    # Шифр Виженера
 option(ISL_BUILD_HILL_PROJECT           "Build hill main test"           ON)    # Шифр Хилла
 option(ISL_BUILD_TRANSPOSITION_PROJECT  "Build transposition main test"  ON)    # Шифр перестановки
-option(ISL_BUILD_KEY_MGR_PROJECT        "Build key manager main test"    ON)    # Менеджер ключей
 #################################################################################
 #                               Macros and functions                            #
 #################################################################################
@@ -70,7 +69,6 @@ isl_create_project(ISL_PLAYFAIR_PROJECT       "5_playfair"       "0.0.1")   # Ш
 isl_create_project(ISL_VIGENERE_PROJECT       "6_vigenere"       "0.0.1")   # Шифр Виженера
 isl_create_project(ISL_HILL_PROJECT           "7_hill"           "0.0.1")   # Шифр Хилла
 isl_create_project(ISL_TRANSPOSITION_PROJECT  "8_transposition"  "0.0.1")   # Шифр перестановки
-isl_create_project(ISL_KEY_MGR_PROJECT        "11_key_mgr"       "0.0.1")   # Менеджер ключей
 
 #################################################################################
 #                                     Sources                                   #
@@ -86,7 +84,6 @@ set(ISL_CIPHER_LIBRARY_SRC
     src/cipher/hill.cpp
     src/cipher/transposition.cpp
     src/cipher/key.cpp
-    src/cipher/key_mgr.cpp
 )
 
 ### apps 1 - 9
@@ -98,7 +95,6 @@ set(ISL_CIPHER_PLAYFAIR_SRC_MAIN       test/playfair_main.cpp)
 set(ISL_CIPHER_VIGENERE_SRC_MAIN       test/vigenere_main.cpp)
 set(ISL_CIPHER_HILL_SRC_MAIN           test/hill_main.cpp)
 set(ISL_CIPHER_TRANSPOSITION_SRC_MAIN  test/transposition_main.cpp)
-set(ISL_KEY_MGR_SRC_MAIN               test/key_mgr_main.cpp)
 
 #################################################################################
 #                                     Library                                   #
@@ -124,7 +120,6 @@ isl_executable(ISL_PLAYFAIR_PROJECT       ISL_CIPHER_PLAYFAIR_SRC_MAIN)         
 isl_executable(ISL_VIGENERE_PROJECT       ISL_CIPHER_VIGENERE_SRC_MAIN)         # Шифр Виженера
 isl_executable(ISL_HILL_PROJECT           ISL_CIPHER_HILL_SRC_MAIN)             # Шифр Хилла
 isl_executable(ISL_TRANSPOSITION_PROJECT  ISL_CIPHER_TRANSPOSITION_SRC_MAIN)    # Шифр перестановки
-isl_executable(ISL_KEY_MGR_PROJECT        ISL_KEY_MGR_SRC_MAIN)                 # Менеджер ключей
 
 #################################################################################
 #                                Libraries include                              #
@@ -137,7 +132,6 @@ isl_library_include(ISL_PLAYFAIR_PROJECT)                                       
 isl_library_include(ISL_VIGENERE_PROJECT)                                       # Подключаем к "Шифр Виженера" библиотеку cipher
 isl_library_include(ISL_HILL_PROJECT)                                           # Подключаем к "Шифр Хилла" библиотеку cipher
 isl_library_include(ISL_TRANSPOSITION_PROJECT)                                  # Подключаем к "Шифр перестановки" библиотеку cipher
-isl_library_include(ISL_KEY_MGR_PROJECT)                                        # Подключаем к "Менеджер ключей" библиотеку cipher
 
 #################################################################################
 #                                 Output directory                              #

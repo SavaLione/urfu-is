@@ -4,48 +4,13 @@ affine::affine()
 {
 	_set_name("affine");
 	_set_description("affine cipher");
+
+	_key.a = 3;
+	_key.b = 5;
 }
 
 affine::~affine()
 {
-}
-
-void affine::set_key(std::string const &key)
-{
-	_key = key;
-
-	std::string key_a = "";
-	std::string key_b = "";
-
-	for(int i = 0, z = 0; i < _key.size(); i++)
-	{
-		if(_key[i] != ' ')
-		{
-			if(z == 0)
-			{
-				key_a += _key[i];
-			}
-			else if(z == 1)
-			{
-				key_b += _key[i];
-			}
-		}
-		else
-		{
-			z++;
-		}
-	}
-
-	try
-	{
-		_key_a = std::stoi(key_a);
-		_key_b = std::stoi(key_b);
-	}
-	catch(...)
-	{
-		_key_a = 3;
-		_key_b = 5;
-	}
 }
 
 void affine::encrypt()
@@ -57,7 +22,7 @@ void affine::encrypt()
 		int char_pos = _alphabet.find(_source_text[i]);
 		if(char_pos >= 0)
 		{
-			_cipher_text += _alphabet[((_key_a * char_pos + _key_b) % power) % power];
+			_cipher_text += _alphabet[((_key.a * char_pos + _key.b) % power) % power];
 		}
 	}
 }
@@ -66,13 +31,13 @@ void affine::decrypt()
 {
 	_source_text = "";
 	int power	 = get_power();
-	int inverse	 = _modular_inverse(_key_a, power);
+	int inverse	 = _modular_inverse(_key.a, power);
 	for(int i = 0; i < _cipher_text.size(); i++)
 	{
 		int char_pos = _alphabet.find(_cipher_text[i]);
 		if(char_pos >= 0)
 		{
-			_source_text += _alphabet[(inverse * ((power + char_pos - _key_b) % power)) % power];
+			_source_text += _alphabet[(inverse * ((power + char_pos - _key.b) % power)) % power];
 		}
 	}
 }

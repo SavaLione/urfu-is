@@ -7,7 +7,7 @@
 
 #include "cipher/key.h"
 
-class multiplicative : public key
+class multiplicative : public key<int>
 {
 public:
 	multiplicative();
@@ -16,11 +16,7 @@ public:
 	void encrypt();
 	void decrypt();
 
-	void set_key(std::string key);
-
 private:
-	int _i_key = 0;
-
 	int _modular_inverse(int a, int m);
 };
 

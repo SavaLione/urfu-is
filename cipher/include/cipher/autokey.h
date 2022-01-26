@@ -7,7 +7,7 @@
 
 #include "cipher/key.h"
 
-class autokey : public key
+class autokey : public key<std::string>
 {
 public:
 	autokey();

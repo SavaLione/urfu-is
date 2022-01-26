@@ -7,21 +7,16 @@
 
 #include "cipher/key.h"
 
-class affine : public key
+class affine : public key<key_ab>
 {
 public:
 	affine();
 	~affine();
 
-	void set_key(std::string const &key);
-
 	void encrypt();
 	void decrypt();
 
 private:
-	int _key_a = 3;
-	int _key_b = 5;
-
 	int _gcd(int a, int b);
 	int _modular_inverse(int a, int m);
 };
